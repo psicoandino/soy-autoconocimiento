@@ -1,1189 +1,288 @@
 /* =======================================================
-   SOY AUTOCONOCIMIENTO 2.0
-   LABERINTO & BAZAR
+   SOY AUTOCONOCIMIENTO 2.5 - MOTOR DE INTERACCIÓN
    ======================================================= */
 
 :root {
-
-  /* ======================
-     PALETA
-     ====================== */
-
   --night: #071426;
   --midnight: #0d2240;
   --deep-blue: #16315b;
   --blue-glow: #264a80;
-
   --paper: #f3f0ea;
   --stone: #d8d1c6;
   --mist: #e8e3db;
-
   --gold: #c8a15a;
   --gold-soft: #dfc48f;
   --gold-dark: #a17b3e;
-
   --ink: #1c2430;
   --ink-soft: #556070;
-
   --line: rgba(255,255,255,.08);
 
-  /* ======================
-     SOMBRAS
-     ====================== */
-
-  --shadow-sm:
-    0 10px 30px rgba(0,0,0,.08);
-
-  --shadow-md:
-    0 20px 60px rgba(0,0,0,.12);
-
-  --shadow-lg:
-    0 40px 100px rgba(0,0,0,.18);
-
-  /* ======================
-     RADIOS
-     ====================== */
+  --shadow-sm: 0 10px 30px rgba(0,0,0,.08);
+  --shadow-md: 0 20px 60px rgba(0,0,0,.12);
+  --shadow-lg: 0 40px 100px rgba(0,0,0,.18);
 
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 32px;
-
-  /* ======================
-     TRANSICIONES
-     ====================== */
-
-  --transition:
-    all .35s ease;
-
-  /* ======================
-     LAYOUT
-     ====================== */
-
-  --container:
-    min(1200px, calc(100% - 2rem));
+  --transition: all .35s cubic-bezier(0.25, 1, 0.5, 1);
+  --container: min(1200px, calc(100% - 2rem));
 }
 
-/* =======================================================
-   RESET
-   ======================================================= */
+/* RESET STANDARD */
+*, *::before, *::after { box-sizing: border-box; }
 
-*,
-*::before,
-*::after {
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--night);
+  color: var(--paper);
+  line-height: 1.7;
+  overflow: hidden; /* Delegamos el scroll al viewport contenedor snap */
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; background: transparent; border: none; cursor: pointer; padding: 0; }
+
+/* ARQUITECTURA DE SCROLL SNAP (MÓVIL PRINCIPAL) */
+.scroll-snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-
-  margin: 0;
-
-  font-family:
-    "Inter",
-    sans-serif;
-
-  background:
-    var(--night);
-
-  color:
-    var(--paper);
-
-  line-height: 1.7;
-
-  overflow-x: hidden;
-
-  -webkit-font-smoothing:
-    antialiased;
-}
-
-img {
-  display: block;
-  width: 100%;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-}
-
 /* =======================================================
-   COSMOS
+   COMPONENTE: SLIDE NAVIGATOR (IZQUIERDO Y ASIMÉTRICO)
    ======================================================= */
-
-.cosmos-layer {
-
+.slide-navigator {
   position: fixed;
-
-  inset: 0;
-
-  z-index: -10;
-
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  z-index: 90;
+  opacity: 0; /* Visibilidad pasiva por defecto */
   pointer-events: none;
+  transition: opacity 0.4s ease;
+}
 
+/* Clase de control activada por movimiento en JS */
+.slide-navigator.is-scrolling {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-soft);
+  background: transparent;
+  transition: var(--transition);
+}
+
+.nav-dot.active {
+  background: var(--gold);
+  transform: scale(1.3);
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* COMSOS BACKGROUND LAYER */
+.cosmos-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
   overflow: hidden;
 }
 
 #labyrinth-container {
-
   position: absolute;
-
   right: -10vw;
   top: -5vh;
-
   width: 77vw;
   height: 77vw;
-
-  background:
-    url("laberinto.svg") center / contain no-repeat,
-    url("rosa.svg") center / contain no-repeat;
-
+  background: url("laberinto.svg") center / contain no-repeat, url("rosa.svg") center / contain no-repeat;
   opacity: .10;
 }
 
-/* =======================================================
-   HEADER
-   ======================================================= */
-
+/* SITE HEADER */
 .site-header {
-
-  position: sticky;
-
+  position: fixed;
   top: 0;
-
+  left: 0;
+  width: 100%;
   z-index: 100;
-
   backdrop-filter: blur(16px);
-
-  background:
-    rgba(7,20,38,.82);
-
-  border-bottom:
-    1px solid rgba(200,161,90,.15);
+  background: rgba(7,20,38,.82);
+  border-bottom: 1px solid rgba(200,161,90,.15);
 }
 
 .header-inner {
-
-  gap: 2rem;
-
   width: var(--container);
-
   margin: auto;
-
-  min-height: 55px;
-
+  min-height: 65px;
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 }
 
-.brand {
-  flex: 1;
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo { width: 33px; height: 33px; object-fit: contain; }
+.brand-text { font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-soft); }
 
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-.brand-logo {
-
-  width: 33px;
-  height: 33px;
-
-  object-fit: contain;
-}
-
-.brand-text {
-
-  font-size: .95rem;
-
-  letter-spacing: .08em;
-
-  text-transform: uppercase;
-
+/* TRIGGER DE QUIÉN SOY MÓVIL */
+.about-trigger-btn {
+  background: transparent;
+  border: 1px solid rgba(200,161,90,0.4);
   color: var(--gold-soft);
-}
-
-.main-nav {
-
-  display: flex;
-
-  gap: 2rem;
-}
-
-.main-nav a {
-
-  font-size: .9rem;
-
-  color: rgba(255,255,255,.82);
-
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
   transition: var(--transition);
 }
 
-.main-nav a:hover {
-
-  color: var(--gold-soft);
+.about-trigger-btn:shadow {
+  background: rgba(200,161,90,0.1);
 }
 
-/* =======================================================
-   MOBILE MENU
-   ======================================================= */
+.main-nav { display: flex; gap: 2rem; align-items: center; }
+.main-nav a, .about-desktop-link { font-size: .9rem; color: rgba(255,255,255,.82); transition: var(--transition); }
+.main-nav a:hover, .about-desktop-link:hover { color: var(--gold-soft); }
 
-.menu-toggle {
-
-  display: none;
-
-  width: 44px;
-  height: 44px;
-
-  background: transparent;
-
-  border: none;
-
-  cursor: pointer;
-}
-
-.menu-toggle span {
-
-  display: block;
-
-  width: 24px;
-  height: 2px;
-
-  margin: 5px auto;
-
-  background: white;
-}
-
-/* =======================================================
-   HERO
-   ======================================================= */
-
+/* HERO SECTION */
 .hero-section {
-
-  min-height: 100vh;
-
   width: var(--container);
-
   margin: auto;
-
   display: grid;
-
-  grid-template-columns:
-    1.1fr .9fr;
-
+  grid-template-columns: 1.1fr .9fr;
   align-items: center;
-
   gap: 3rem;
-
-  padding:
-    5rem 0;
 }
 
-.hero-content {
+.hero-content { max-width: 650px; }
+.section-mark { display: inline-block; color: var(--gold-soft); letter-spacing: .15em; text-transform: uppercase; font-size: .75rem; margin-bottom: 1rem; }
+.hero-section h1 { margin: 0 0 2rem 0; font-family: "Cormorant Garamond", serif; font-size: clamp(3.5rem,7vw,6rem); line-height: .95; font-weight: 400; }
+.hero-lead { font-size: 1.4rem; color: rgba(255,255,255,.82); max-width: 620px; margin-bottom: 2.5rem; }
 
-  max-width: 650px;
-}
+.hero-symbol { display: flex; justify-content: center; align-items: center; }
+#hero-labyrinth { width: min(480px,90vw); aspect-ratio: 1; }
 
-.section-mark {
+/* BOTONES GENÉRICOS */
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; border-radius: 999px; transition: var(--transition); font-size: 0.95rem; }
+.hero-actions, .modal-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+.btn-primary { background: var(--gold); color: var(--night); font-weight: 600; }
+.btn-primary:hover { transform: translateY(-2px); background: var(--gold-soft); }
+.btn-secondary { border: 1px solid rgba(255,255,255,.2); color: var(--paper); }
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold-soft); }
 
-  display: inline-block;
+/* BAZAR DE SERVICIOS */
+.services-section { width: var(--container); margin: auto; }
+.section-heading { text-align: center; margin-bottom: 3rem; }
+.section-heading h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.5rem,5vw,4rem); font-weight: 400; margin: .5rem 0 1rem; }
+.section-heading p { max-width: 700px; margin: auto; color: rgba(255,255,255,.75); }
 
-  color: var(--gold-soft);
-
-  letter-spacing: .15em;
-
-  text-transform: uppercase;
-
-  font-size: .75rem;
-
-  margin-bottom: 1rem;
-}
-
-.hero-section h1 {
-
-  margin: 0;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(4rem,8vw,7rem);
-
-  line-height: .95;
-
-  font-weight: 400;
-
-  margin-bottom: 2rem;
-}
-
-.hero-lead {
-
-  font-size: 1.7rem;
-
-  color:
-    rgba(255,255,255,.82);
-
-  max-width: 620px;
-
-  margin-bottom: 2.5rem;
-}
-
-.hero-symbol {
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-}
-
-#hero-labyrinth {
-
-  width: min(520px,90vw);
-
-  aspect-ratio: 1;
-}
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }
+.service-card { background: var(--paper); color: var(--ink); border-radius: var(--radius-md); overflow: hidden; transition: var(--transition); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.service-visual { height: 160px; background: linear-gradient(135deg, var(--midnight), var(--deep-blue)); }
+.service-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.service-body h3 { margin: 0 0 1rem 0; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 500; }
+.service-button { margin-top: 1rem; width: 100%; padding: .9rem; border: none; border-radius: 999px; background: var(--midnight); color: white; cursor: pointer; transition: var(--transition); }
+.service-button:hover { background: var(--deep-blue); }
 
 /* =======================================================
-   BOTONES
+   ESTRUCTURA DE MODALES ELECTRÓNICOS
    ======================================================= */
-
-.btn {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding:
-    14px 28px;
-
-  border-radius:
-    999px;
-
-  transition:
-    var(--transition);
-}
-
-.hero-actions,
-.contact-actions,
-.modal-actions {
-
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
   display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 200;
 }
 
-.btn-primary {
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-window { background: var(--paper); color: var(--ink); width: min(650px,100%); border-radius: var(--radius-lg); padding: 2.5rem; position: relative; max-height: 90vh; overflow-y: auto; }
+.modal-close { position: absolute; top: 1rem; right: 1rem; border: none; background: transparent; font-size: 2rem; cursor: pointer; color: var(--ink-soft); }
 
-  background:
-    var(--gold);
-
-  color:
-    var(--night);
-
-  font-weight: 600;
-}
-
-.btn-primary:hover {
-
-  transform:
-    translateY(-2px);
-
-  background:
-    var(--gold-soft);
-}
-
-.btn-secondary {
-
-  border:
-    1px solid rgba(255,255,255,.2);
-
-  color:
-    var(--paper);
-}
-
-.btn-secondary:hover {
-
-  border-color:
-    var(--gold);
-
-  color:
-    var(--gold-soft);
-}
+/* ESPECIALIZACIÓN: MODAL ACERCA DE MÍ MÓVIL/DESKTOP */
+.about-modal-window { width: min(1000px, 100%); padding: 3.5rem 2.5rem; }
+.about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; align-items: center; }
+.about-image { max-width: 400px; width: 100%; justify-self: center; }
+.image-frame { background: white; padding: 1rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+.about-content h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.2rem,4vw,3.5rem); line-height: 1.05; margin: .5rem 0 1.5rem 0; font-weight: 400; }
+.about-content p { color: var(--ink-soft); font-size: 1rem; line-height: 1.8; margin-bottom: 1.2rem; }
+.signature-block { margin-top: 2.5rem; }
+.signature-line { display: block; width: 80px; height: 1px; background: var(--gold); margin-bottom: 1rem; }
+.signature-name { display: block; color: var(--gold-dark); font-weight: 600; font-size: 1rem; }
+.signature-title { display: block; margin-top: .2rem; color: var(--ink-soft); font-size: .9rem; font-style: italic; }
 
 /* =======================================================
-   ABOUT
+   RESPONSIVE DESIGN AUTOMATION
    ======================================================= */
-
-.about-section {
-
-  background:
-    var(--paper);
-
-  color:
-    var(--ink);
-
-  padding:
-    8rem 0;
-}
-
-.about-grid {
-
-  width: var(--container);
-
-  margin: auto;
-
-  display: grid;
-
-  grid-template-columns: .95fr 1.05fr;
-
-  gap: 7rem;
-
-  align-items: center;
-}
-
-.about-image {
-
-  max-width: 460px;
-
-  width: 100%;
-
-  justify-self: center;
-}
-
-.about-grid > * {
-
-  direction:
-    ltr;
-}
-
-.image-frame {
-
-  background:
-    white;
-
-  padding:
-    1rem;
-
-  border-radius:
-    var(--radius-lg);
-
-  box-shadow:
-    var(--shadow-md);
-}
-
-.image-frame {
-
-  transition: transform .4s ease;
-}
-
-.image-frame:hover {
-
-  transform: translateY(-4px);
-}
-
-.image-frame img {
-
-  border-radius:
-    calc(var(--radius-lg) - 8px);
-
-  aspect-ratio:
-    4/5;
-
-  object-fit:
-    cover;
-}
-
-.about-content h2 {
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(3rem,5vw,4.5rem);
-
-  max-width: 12ch;
-
-  line-height: .95;
-
-  margin-top: .5rem;
-
-  margin-bottom: 2rem;
-
-  font-weight: 400;
-}
-
-.about-content p {
-
-  max-width: 62ch;
-
-  color: var(--ink-soft);
-
-  font-size: 1.05rem;
-
-  line-height: 1.9;
-
-  margin-bottom: 1.75rem;
-}
-
-.signature-block {
-
-  margin-top:
-    3rem;
-}
-
-.signature-line {
-
-  display:
-    block;
-
-  width:
-    80px;
-
-  height:
-    1px;
-
-  background:
-    var(--gold);
-
-  margin-bottom:
-    1rem;
-}
-
-.about-quote {
-
-  max-width: 24ch;
-
-  margin: 3.5rem 0;
-
-  padding-left: 1.5rem;
-
-  border-left: 2px solid var(--gold);
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(1.6rem,2vw,2rem);
-
-  line-height: 1.4;
-
-  color: var(--ink);
-
-  font-style: italic;
+@media (max-width: 1024px) {
+  .hero-section { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  .hero-content { display: flex; flex-direction: column; align-items: center; }
+  .hero-symbol { display: none; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-image { max-width: 300px; }
 }
 
 @media (max-width: 768px) {
-  .about-section {
-    padding: 4rem 0 !important;
-    height: auto !important; /* Eliminamos restricciones rígidas de altura */
-  }
-
-  .about-grid {
-    display: flex !important;
-    flex-direction: column !important; /* Apilamiento vertical nativo */
-    gap: 2.5rem !important;
-    width: 90%;
-    margin: auto;
-  }
-
-  .about-content {
-    display: block !important; /* Retorna al comportamiento estándar seguro */
-  }
-
-  .about-content h2 {
-    font-size: 2.2rem !important;
-    line-height: 1.2;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .about-content p {
-    font-size: 1.1rem !important;
-    line-height: 1.6 !important;
-    margin-bottom: 1.2rem !important;
-  }
-
-  .about-image {
-    max-width: 100%;
-    margin: 1rem 0 !important;
-    order: -1; /* Opcional: Esto coloca la foto de Marcela ARRIBA del texto en móviles */
-  }
-}
-
-/* =======================================================
-   TRANSICIÓN
-   ======================================================= */
-
-.transition-section {
-
-  padding:
-    6rem 2rem;
-
-  text-align:
-    center;
-}
-
-.transition-inner {
-
-  max-width:
-    900px;
-
-  margin:
-    auto;
-}
-
-.transition-text {
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(2rem,4vw,3.5rem);
-
-  color:
-    var(--gold-soft);
-
-  margin:
-    0;
-}
-
-/* =======================================================
-   SERVICIOS
-   ======================================================= */
-
-.services-section {
-
-  padding:
-    8rem 0;
-}
-
-.section-heading {
-
-  width:
-    var(--container);
-
-  margin:
-    auto;
-
-  text-align:
-    center;
-
-  margin-bottom:
-    4rem;
-}
-
-.section-heading h2 {
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(3rem,5vw,4.5rem);
-
-  font-weight:
-    400;
-
-  margin:
-    .5rem 0 1rem;
-}
-
-.section-heading p {
-
-  max-width:
-    700px;
-
-  margin:
-    auto;
-
-  color:
-    rgba(255,255,255,.75);
-}
-
-.services-grid {
-
-  width:
-    var(--container);
-
-  margin:
-    auto;
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:
-    1.5rem;
-}
-
-.service-card {
-
-  background:
-    var(--paper);
-
-  color:
-    var(--ink);
-
-  border-radius:
-    var(--radius-md);
-
-  overflow:
-    hidden;
-
-  transition:
-    var(--transition);
-
-  box-shadow:
-    var(--shadow-sm);
-}
-
-.service-card:hover {
-
-  transform:
-    translateY(-6px);
-
-  box-shadow:
-    var(--shadow-lg);
-}
-
-.service-visual {
-
-  height:
-    180px;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--midnight),
-      var(--deep-blue)
-    );
-}
-
-.service-body {
-
-  padding:
-    1.5rem;
-}
-
-.service-body h3 {
-
-  margin-top:
-    0;
-
-  margin-bottom:
-    1rem;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.8rem;
-
-  font-weight:
-    500;
-}
-
-.service-button {
-
-  margin-top:
-    1rem;
-
-  width:
-    100%;
-
-  padding:
-    .9rem;
-
-  border:
-    none;
-
-  border-radius:
-    999px;
-
-  background:
-    var(--midnight);
-
-  color:
-    white;
-
-  cursor:
-    pointer;
-}
-
-@media (max-width: 768px) {
-  /* 1. Forzamos a la sección a medir exactamente el alto de la pantalla */
-  .services-section {
-    height: 100vh !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra verticalmente el título y las tarjetas */
-    padding: 2rem 0 !important;
-    overflow: hidden;
-  }
-
-  /* 2. Transformamos el Grid en un carril de deslizamiento horizontal (X) */
+  .main-nav { display: none; } /* Ocultamos navegación extendida desktop */
+  .slide-navigator { display: flex; } /* Activamos puntos de salto lateral */
+
+  /* CARRUSEL HORIZONTAL EN EL SLIDE 2 BAZAR */
+  .services-section { height: 100vh; overflow: hidden; padding-top: 80px; }
   .services-grid {
-    display: flex !important; /* Cambiamos a flex para alineación lineal */
+    display: flex !important;
     flex-direction: row !important;
-    overflow-x: auto;         /* Activa el scroll horizontal nativo */
-    scroll-snap-type: x mandatory; /* ¡Scroll snapping interno para las tarjetas! */
-    gap: 1.5rem;
-    padding: 1rem 0;         /* Margen de cortesía a los lados */
-    width: 100%;
-    
-    position: relative;
-
-    /* Oculta la barra de scroll en Safari y Chrome para mantener la estética limpia */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.2rem;
+    padding: 1rem 1.5rem;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%); /* Rompe el padding del container padre */
     -webkit-overflow-scrolling: touch;
   }
-
-  .services-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* 3. Ajustamos el tamaño de cada tarjeta para que no colapse */
+  .services-grid::-webkit-scrollbar { display: none; }
+  
   .service-card {
-    flex: 0 0 80%;           /* Cada tarjeta ocupa el 80% del ancho de la pantalla */
-    scroll-snap-align: center; /* La tarjeta se magnetiza al centro al deslizar */
-    max-height: 55vh;        /* Limitamos su altura para que no sature el viewport */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+    max-height: 52vh;
   }
-}
-
-/* =======================================================
-   CONTACTO
-   ======================================================= */
-
-.contact-section {
-
-  padding:
-    8rem 0;
-}
-
-.contact-card {
-
-  width:
-    min(900px,calc(100% - 2rem));
-
-  margin:
-    auto;
-
-  padding:
-    4rem;
-
-  border:
-    1px solid rgba(200,161,90,.2);
-
-  border-radius:
-    var(--radius-lg);
-
-  background:
-    rgba(255,255,255,.03);
-
-  backdrop-filter:
-    blur(12px);
-
-  text-align:
-    center;
-}
-
-.contact-card h2 {
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(3rem,5vw,4rem);
-
-  font-weight:
-    400;
-}
-
-/* =======================================================
-   FOOTER
-   ======================================================= */
-
-.site-footer {
-
-  border-top:
-    1px solid rgba(255,255,255,.06);
-
-  padding:
-    2rem 0;
-}
-
-.footer-inner {
-
-  width:
-    var(--container);
-
-  margin:
-    auto;
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-}
-
-.footer-links {
-
-  display:
-    flex;
-
-  gap:
-    1.5rem;
-}
-
-/* =======================================================
-   MODAL
-   ======================================================= */
-
-.modal-overlay {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  background:
-    rgba(0,0,0,.75);
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  padding:
-    2rem;
-
-  opacity:
-    0;
-
-  pointer-events:
-    none;
-
-  transition:
-    .3s;
-}
-
-.modal-overlay.active {
-
-  opacity:
-    1;
-
-  pointer-events:
-    auto;
-}
-
-.modal-window {
-
-  background:
-    var(--paper);
-
-  color:
-    var(--ink);
-
-  width:
-    min(700px,100%);
-
-  border-radius:
-    var(--radius-lg);
-
-  padding:
-    3rem;
-
-  position:
-    relative;
-}
-
-.modal-close {
-
-  position:
-    absolute;
-
-  top:
-    1rem;
-
-  right:
-    1rem;
-
-  border:
-    none;
-
-  background:
-    transparent;
-
-  font-size:
-    2rem;
-
-  cursor:
-    pointer;
-}
-
-.modal-specs {
-
-  margin:
-    2rem 0;
-
-  padding-left:
-    1.2rem;
-}
-
-/* =======================================================
-   RESPONSIVE
-   ======================================================= */
-
-@media (max-width: 1024px) {
-
-  .services-grid {
-
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .hero-section {
-
-    grid-template-columns:
-      1fr;
-  }
-
-  .hero-symbol {
-
-    display:
-      none;
-  }
-}
-
-@media (max-width: 768px) {
-
-  .main-nav {
-    display: none; /* Oculto por defecto en móvil */
-    flex-direction: column;
-    position: fixed;
-    top: 55px; /* Ajustado al alto de tu header */
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 55px);
-    background: rgba(7, 20, 38, 0.98); /* Fondo --night sólido para legibilidad */
-    backdrop-filter: blur(16px);
-    padding: 3rem 2rem;
-    gap: 2.5rem;
-    z-index: 99;
-  }
-
-  /* 2. El estado activo que conecta con tu JS */
-  .main-nav.is-open {
-    display: flex; /* Se muestra solo cuando se hace clic en el toggle */
-  }
-
-  .menu-toggle {
-
-    display: block;
-  }
-
-  .services-grid {
-
-    grid-template-columns:
-      1fr;
-  }
-
-  .footer-inner {
-
-    flex-direction:
-      column;
-
-    gap:
-      1rem;
-  }
-
-  .contact-card {
-
-    padding:
-      2rem;
-  }
-
-  .hero-section {
-
-    min-height:
-      auto;
-
-    padding:
-      8rem 0 4rem;
-  }
-
-  .hero-actions,
-  .contact-actions {
-
-    flex-direction:
-      column;
-  }
-
-  .btn {
-
-    width:
-      100%;
-  }
-}
-
-.signature-name {
-
-  display: block;
-
-  color: var(--gold-dark);
-
-  font-weight: 600;
-
-  font-size: 1rem;
-
-  letter-spacing: .03em;
-}
-
-.signature-title {
-
-  display: block;
-
-  margin-top: .4rem;
-
-  color: var(--ink-soft);
-
-  font-size: .95rem;
-
-  font-style: italic;
-
-  font-weight: 400;
+  
+  .service-visual { height: 120px; }
+  .service-body h3 { font-size: 1.4rem; }
+
+  /* Ajustes finos del modal bio en móvil */
+  .about-modal-window { padding: 2.5rem 1.5rem; }
+  .about-image { order: -1; }
 }
