@@ -1,247 +1,455 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soy Autoconocimiento - Propuesta Mockup</title>
-    <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=WindSong:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="#home" aria-label="Soy Autoconocimiento home">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Soy Autoconocimiento</title>
+
+  <meta
+    name="description"
+    content="[DESCRIPCIÓN SEO]"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ===================================== -->
+  <!-- OBSERVATORIO SVG -->
+  <!-- ===================================== -->
+
+  <div class="cosmos-layer" aria-hidden="true">
+    <div id="labyrinth-container"></div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- HEADER -->
+  <!-- ===================================== -->
+
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <a href="#home" class="brand">
+
         <img
-          class="brand-logo"
-          src="https://soyautoconocimiento.cl/wp-content/uploads/2024/04/cropped-cropped-Logotipo_Mesa-de-trabajo-1-300x300.png"
+          src="logo.png"
           alt="Soy Autoconocimiento"
+          class="brand-logo"
         />
-        <span class="brand-name">Soy Autoconocimiento</span>
+
+        <span class="brand-text">
+          Soy Autoconocimiento
+        </span>
+
       </a>
 
-      <button class="icon-button menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <button
+        class="menu-toggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <nav class="main-nav" aria-label="Primary navigation">
-        <a href="#courses">Cursos</a>
-        <a href="#services">Servicios</a>
-        <a href="#blog">Blog</a>
-        <a href="#dashboard">Mi espacio</a>
+      <nav class="main-nav">
+
+        <a href="#home">
+          Inicio
+        </a>
+
+        <a href="#about">
+          Quién Soy
+        </a>
+
+        <a href="#services">
+          Acompañamientos
+        </a>
+
+        <a href="#contact">
+          Contacto
+        </a>
+
       </nav>
 
-      <button class="login-button" type="button" data-login-toggle>Ingresar</button>
-    </header>
+    </div>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="hero-media" aria-hidden="true">
-          <img
-            src="https://soyautoconocimiento.cl/wp-content/uploads/2024/04/fondo-rosado-hermoso-flor-scaled-e1716862263990.jpg"
-            alt=""
-          />
+  </header>
+
+  <!-- ===================================== -->
+  <!-- MAIN -->
+  <!-- ===================================== -->
+
+  <main>
+
+    <!-- ===================================== -->
+    <!-- HERO / UMBRAL -->
+    <!-- ===================================== -->
+
+    <section
+      class="hero-section"
+      id="home"
+    >
+
+      <div class="hero-content">
+
+        <span class="section-mark">
+          [ETIQUETA]
+        </span>
+
+        <h1>
+          Terapia Floral Evolutiva
+        </h1>
+
+        <p class="hero-lead">
+            Acompañamiento personalizado para tu proceso de autoconocimiento y crecimiento personal.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#"
+            class="btn btn-primary"
+          >
+            Hablemos
+          </a>
+
+          <a
+            href="#"
+            class="btn btn-secondary"
+          >
+            Agendar
+          </a>
+
         </div>
-        <div class="hero-content">
-          <p class="eyebrow">Propuesta de plataforma web</p>
-          <h1>Soy Autoconocimiento</h1>
-          <p>
-            Un espacio digital donde las personas pueden aprender con cursos, reservar servicios y volver a sus
-            procesos personales con una experiencia simple, bella y cercana.
-          </p>
-          <div class="hero-actions">
-            <a class="primary-action" href="#courses">Ver cursos</a>
-            <a class="secondary-action" href="#services">Ver servicios</a>
+
+      </div>
+
+      <div class="hero-symbol">
+
+        <!-- El SVG se inyectará desde JS -->
+
+        <div id="hero-labyrinth"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- QUIÉN SOY -->
+    <!-- ===================================== -->
+
+    <section
+      class="about-section"
+      id="about"
+    >
+
+      <div class="about-grid">
+
+        <div class="about-image">
+
+          <div class="image-frame">
+
+            <img
+              src="about_me.jpg"
+              alt="Marcela Garrido"
+            />
+
           </div>
-        </div>
-      </section>
 
-      <section class="trust-strip" aria-label="Platform highlights">
-        <div>
-          <strong>3</strong>
-          <span>rutas de aprendizaje</span>
         </div>
-        <div>
-          <strong>8</strong>
-          <span>servicios guiados</span>
-        </div>
-        <div>
-          <strong>24/7</strong>
-          <span>acceso de alumnos</span>
-        </div>
-        <div>
-          <strong>Mock</strong>
-          <span>sin pagos reales</span>
-        </div>
-      </section>
 
-      <section class="section-shell split-section" id="courses">
-        <div class="section-copy">
-          <p class="eyebrow">Plataforma de cursos</p>
-          <h2>Cursos con lecciones, tareas y progreso.</h2>
+        <div class="about-content">
+
+          <span class="section-mark">
+            SOY MARCELA
+          </span>
+
+          <h2>
+            Un camino de regreso a uno mismo
+          </h2>
+
           <p>
-            Las personas pueden inscribirse, continuar donde quedaron, completar practicas y guardar notas
-            privadas durante su proceso de autoconocimiento.
+            Soy Marcela Garrido. Desde hace años acompaño procesos de autoconocimiento, inspirada por una pregunta que ha guiado gran parte de mi vida: ¿quién soy más allá de los roles, las expectativas y las historias que he aprendido sobre mí misma?
           </p>
+
+          <p>
+            Mi camino integra la Terapia Humanista Transpersonal, las Flores de Bach, la Astrología y las Constelaciones Familiares. Más que entregar respuestas, estas herramientas abren espacios de observación, comprensión y encuentro con la sabiduría interior que habita en cada persona.
+          </p>
+
+          <p>
+            Creo profundamente que la transformación ocurre cuando aprendemos a escucharnos con honestidad y presencia. Cada terapia, taller o encuentro nace del deseo de acompañar a otros en el descubrimiento de su propia verdad y su forma única de habitar la vida.
+          </p>
+
+          <div class="signature-block">
+
+            <span class="signature-line"></span>
+
+            <span class="signature-name">
+
+              Marcela Garrido
+
+              <span class="signature-title">
+                Terapeuta Humanista Transpersonal
+              </span>
+
+            </span>
+
+          </div>
+
         </div>
 
-        <div class="course-grid">
-          <article class="course-card">
-            <img
-              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80"
-              alt="Notebook on a desk"
-            />
-            <div class="card-body">
-              <span class="pill">6 modulos</span>
-              <h3>Journaling terapeutico</h3>
-              <p>Prompts semanales, tareas de reflexion y notas privadas para integrar cada practica.</p>
-              <div class="progress-line" aria-label="68 percent complete">
-                <span style="width: 68%"></span>
-              </div>
-              <button class="quiet-button" type="button" data-course="Journaling terapeutico">Continuar</button>
-            </div>
-          </article>
+      </div>
 
-          <article class="course-card">
-            <img
-              src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80"
-              alt="Meditation practice"
-            />
-            <div class="card-body">
-              <span class="pill">4 modulos</span>
-              <h3>Rituales para enraizar</h3>
-              <p>Practicas breves para regulacion emocional, descanso y cierre simbolico.</p>
-              <div class="progress-line" aria-label="22 percent complete">
-                <span style="width: 22%"></span>
-              </div>
-              <button class="quiet-button" type="button" data-course="Rituales para enraizar">Empezar</button>
-            </div>
-          </article>
+    </section>
 
-          <article class="lesson-panel" id="dashboard">
-            <div class="panel-header">
-              <span class="pill">Panel del alumno</span>
-              <span class="status-dot">No has ingresado</span>
-            </div>
-            <h3>Siguiente tarea</h3>
-            <p>Sube una reflexion privada: "Que patron estoy lista/o para comprender distinto?"</p>
-            <label class="checkbox-row">
-              <input type="checkbox" />
-              <span>Marcar leccion como completada</span>
-            </label>
-            <label class="textarea-label" for="mock-note">Nota privada</label>
-            <textarea id="mock-note" rows="4" placeholder="Escribe una reflexion corta..."></textarea>
-          </article>
-        </div>
-      </section>
+    <!-- ===================================== -->
+    <!-- BAZAR -->
+    <!-- ===================================== -->
 
-      <section class="section-shell" id="services">
-        <div class="section-heading">
-          <p class="eyebrow">Servicios</p>
-          <h2>Explora, elige y paga por una sesion.</h2>
-        </div>
+    <section
+      class="services-section"
+      id="services"
+    >
 
-        <div class="service-grid">
-          <article class="service-card">
-            <span class="service-icon">T</span>
-            <h3>Tarot</h3>
-            <p>Lectura con sentido terapeutico para orientar el aqui y ahora desde lo mas profundo del ser.</p>
-            <div class="price-row">
-              <strong>$45</strong>
-              <span>45 min</span>
-            </div>
-            <button type="button" data-buy="Tarot">Checkout mock</button>
-          </article>
+      <div class="section-heading">
 
-          <article class="service-card featured">
-            <span class="service-icon">A</span>
-            <h3>Carta Astral</h3>
-            <p>Lectura personalizada para comprender ciclos, potenciales y aprendizajes vitales.</p>
-            <div class="price-row">
-              <strong>$80</strong>
-              <span>Reporte + audio</span>
-            </div>
-            <button type="button" data-buy="Carta Astral">Checkout mock</button>
-          </article>
+        <span class="section-mark">
+          [SECCIÓN]
+        </span>
 
-          <article class="service-card">
-            <span class="service-icon">C</span>
-            <h3>Constelaciones familiares</h3>
-            <p>Mirar el presente a la luz de la historia familiar para resignificar, sanar y ganar libertad.</p>
-            <div class="price-row">
-              <strong>$65</strong>
-              <span>60 min</span>
-            </div>
-            <button type="button" data-buy="Constelaciones familiares">Checkout mock</button>
-          </article>
+        <h2>
+          [TÍTULO SERVICIOS]
+        </h2>
 
-          <article class="service-card">
-            <span class="service-icon">F</span>
-            <h3>Flores de Bach</h3>
-            <p>Una propuesta suave para armonizar estados emocionales y acompanar procesos de cambio.</p>
-            <div class="price-row">
-              <strong>$38</strong>
-              <span>Sesion</span>
-            </div>
-            <button type="button" data-buy="Flores de Bach">Checkout mock</button>
-          </article>
-        </div>
-      </section>
+        <p>
+          [INTRODUCCIÓN SERVICIOS]
+        </p>
 
-      <section class="blog-band" id="blog">
-        <div class="section-shell blog-layout">
-          <div class="section-copy">
-            <p class="eyebrow">Blog y comunidad</p>
-            <h2>Escritura que invita conversacion.</h2>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- CARD 01 -->
+
+        <article
+          class="service-card"
+          data-title="Lectura de Tarot"
+          data-description="Herramienta de autoconocimiento que utiliza cartas con imágenes y símbolos arquetípicos para explorar situaciones, emociones y patrones presentes en tu vida. A través de una lectura guiada, las cartas actúan como un espejo que facilita la reflexión, ayudando a identificar perspectivas, desafíos y recursos internos que pueden acompañar y enriquecer el proceso terapéutico floral."
+          data-format="Online"
+          data-duration="60 minutos"
+        >
+
+          <div class="service-visual"></div>
+
+          <div class="service-body">
+
+            <h3>
+              Lectura de Tarot
+            </h3>
+
             <p>
-              Marcela puede publicar reflexiones, practicas y anuncios. En este mockup, solo quienes ingresan
-              pueden dar like o comentar.
+              Una invitación a dialogar con tu mundo interior a través de símbolos e imágenes que facilitan la reflexión y la toma de conciencia.
             </p>
+
+            <button
+              class="service-button"
+              type="button"
+            >
+              Explorar
+            </button>
+
           </div>
 
-          <div class="blog-list">
-            <article class="post-card">
-              <img
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80"
-                alt="Writing desk"
-              />
-              <div>
-                <span class="pill">Nueva escritura</span>
-                <h3>El cuerpo recuerda lo que la mente apura</h3>
-                <p>Un texto corto sobre bajar el ritmo, ritual y senales emocionales.</p>
-                <div class="post-actions">
-                  <button type="button" data-like>Like <span>18</span></button>
-                  <button type="button" data-comment>Comentar</button>
-                  <button type="button" data-share>Compartir</button>
-                </div>
-              </div>
-            </article>
+        </article>
 
-            <article class="post-card compact">
-              <div>
-                <span class="pill">Practica</span>
-                <h3>Un ritual de cierre de cinco minutos</h3>
-                <p>Pasos simples para pasar de la activacion al descanso.</p>
-                <div class="post-actions">
-                  <button type="button" data-like>Like <span>31</span></button>
-                  <button type="button" data-comment>Comentar</button>
-                  <button type="button" data-share>Compartir</button>
-                </div>
-              </div>
-            </article>
+        <!-- CARD 02 -->
+
+        <article
+          class="service-card"
+          data-title="Constelaciones Familiares"
+          data-description="Metodología orientada a identificar dinámicas, vínculos y lealtades inconscientes dentro del sistema familiar. Puede ayudar a comprender el origen de ciertos conflictos y favorecer procesos de integración personal que sirven de apoyo para la terapia floral."
+          data-format="Online / Presencial"
+          data-duration="60 Minutos"
+        >
+
+          <div class="service-visual"></div>
+
+          <div class="service-body">
+
+            <h3>
+              Constelaciones Familiares
+            </h3>
+
+            <p>
+              Un espacio para observar las dinámicas de tu sistema familiar y comprender cómo estas pueden influir en tu vida actual.
+            </p>
+
+            <button
+              class="service-button"
+              type="button"
+            >
+              Explorar
+            </button>
+
           </div>
+
+        </article>
+
+        <!-- CARD 03 -->
+
+        <article
+          class="service-card"
+          data-title="Carta Astral"
+          data-description="Mapa simbólico elaborado a partir de la fecha, hora y lugar de nacimiento. Ofrece una mirada sobre potencialidades, desafíos y tendencias personales, contribuyendo al autoconocimiento y al desarrollo consciente."
+          data-format="Online, sesión grabada"
+          data-duration="Sesión de una hora"
+        >
+
+          <div class="service-visual"></div>
+
+          <div class="service-body">
+
+            <h3>
+              Carta Astral
+            </h3>
+
+            <p>
+              Una mirada simbólica a tu mapa natal, que permite explorar tus potencialidades, desafíos y formas únicas de relacionarte con el mundo.
+            </p>
+
+            <button
+              class="service-button"
+              type="button"
+            >
+              Explorar
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===================================== -->
+  <!-- FOOTER -->
+  <!-- ===================================== -->
+
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+      <p>
+        © [AÑO] Soy Autoconocimiento
+      </p>
+
+      <div class="footer-links">
+
+        <a href="#">
+          Instagram
+        </a>
+
+        <a href="#">
+          WhatsApp
+        </a>
+
+        <a href="#">
+          Correo
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- ===================================== -->
+  <!-- MODAL -->
+  <!-- ===================================== -->
+
+  <div
+    class="modal-overlay"
+    id="service-modal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-window">
+
+      <button
+        class="modal-close"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <div class="modal-content">
+
+        <span class="modal-mark">
+          Acompañamiento
+        </span>
+
+        <h3 id="modal-title">
+          Servicio
+        </h3>
+
+        <p id="modal-description">
+          Descripción
+        </p>
+
+        <ul class="modal-specs">
+
+          <li id="modal-format"></li>
+
+          <li id="modal-duration"></li>
+
+          <li id="modal-price"></li>
+
+        </ul>
+
+        <div class="modal-actions">
+
+          <a
+            href="#"
+            class="btn btn-primary"
+          >
+            Conversar
+          </a>
+
+          <a
+            href="#"
+            class="btn btn-secondary"
+          >
+            Agendar
+          </a>
+
         </div>
-      </section>
-    </main>
 
-    <div class="toast" role="status" aria-live="polite"></div>
+      </div>
 
-    <script src="script.js"></script>
-  </body>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
 </html>
