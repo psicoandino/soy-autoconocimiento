@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initServiceModal();
   initLabyrinth();
   initScrollEffects();
+  initCarouselCenter();
 
 });
 
@@ -519,3 +520,29 @@ document.addEventListener(
 
   }
 );
+
+
+/* ==========================================================
+   CENTRADOR AUTOMÁTICO DE BAZAR (MÓVIL)
+   ========================================================== */
+function initCarouselCenter() {
+  const grid = document.querySelector(".services-grid");
+  if (!grid) return;
+
+  // Ejecutar solo si estamos en resolución móvil (coincidiendo con tu CSS de 768px)
+  if (window.innerWidth <= 768) {
+    const cards = grid.querySelectorAll(".service-card");
+    
+    // Nos aseguramos de que existan al menos las 3 tarjetas
+    if (cards.length >= 2) {
+      const middleCard = cards[1]; // Índice 1 es la segunda tarjeta (Servicio 2)
+      
+      // Cálculo Senior: Restamos al inicio de la tarjeta la mitad del espacio sobrante del contenedor
+      // Esto ubica la tarjeta exactamente en el eje central del viewport
+      const offsetCenter = middleCard.offsetLeft - (grid.clientWidth - middleCard.clientWidth) / 2;
+      
+      // Asignamos el scroll de manera instantánea en el render inicial
+      grid.scrollLeft = offsetCenter;
+    }
+  }
+}
