@@ -175,18 +175,33 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 .about-trigger-btn {
   background: transparent;
   border: 1px solid rgba(200,161,90,0.4);
-  color: var(--gold-soft);
-  padding: 3px 6px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  font-weight: 500;
+  padding: 4px;                    /* espacio alrededor de la foto */
+  border-radius: 50%;              /* hace que sea circular */
+  width: 42px;                     /* tamaño del botón */
+  height: 42px;
+  overflow: hidden;                /* importante para que no se salga la foto */
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-trigger-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;               /* mantiene la foto bien proporcionada */
+  border-radius: 50%;
   transition: var(--transition);
 }
 
 .about-trigger-btn:hover,
 .about-trigger-btn:focus-visible {
   background: rgba(200,161,90,0.1);
+  border-color: rgba(200,161,90,0.7);
+}
+
+.about-trigger-btn:hover img {
+  transform: scale(1.08);          /* leve zoom al pasar el mouse */
 }
 
 .main-nav { display: flex; gap: 2rem; align-items: center; }
