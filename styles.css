@@ -443,10 +443,10 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     background-image: url("tarot.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
   }
   .service-card:nth-child(2) .service-visual {
-    background-image: url("servicio2.jpg"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
+    background-image: url("constelaciones.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
   }
   .service-card:nth-child(3) .service-visual {
-    background-image: url("servicio3.jpg"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
+    background-image: url("carta_astral.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
   }
 
   .service-body {
