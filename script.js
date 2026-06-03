@@ -21,7 +21,6 @@ function initEngineScrollSnap() {
 
   if (!container || !navigator) return;
 
-  // 1. Control del desvanecimiento pasivo (Optimizado con bandera pasiva)
   let isScrollingTimeout;
   container.addEventListener("scroll", () => {
     navigator.classList.add("is-scrolling");
@@ -29,13 +28,12 @@ function initEngineScrollSnap() {
     clearTimeout(isScrollingTimeout);
     isScrollingTimeout = setTimeout(() => {
       navigator.classList.remove("is-scrolling");
-    }, 800); // Se desvanece tras 800ms sin interactuar
-  }, { passive: true }); // Optimiza el hilo de renderizado del navegador
+    }, 800); 
+  }, { passive: true }); 
 
-  // 2. Sincronización Bidireccional: Detectar sección activa (IntersectionObserver)
   const observerOptions = {
     root: container,
-    threshold: 0.6 // Se activa cuando el slide ocupa el 60% del viewport
+    threshold: 0.6 
   };
 
   const sectionObserver = new IntersectionObserver((entries) => {
@@ -43,7 +41,6 @@ function initEngineScrollSnap() {
       if (entry.isIntersecting) {
         const activeId = entry.target.getAttribute("id");
         
-        // Actualizar estados de puntos laterales
         dots.forEach(dot => {
           if (dot.dataset.target === activeId) {
             dot.classList.add("active");
@@ -57,7 +54,6 @@ function initEngineScrollSnap() {
 
   sections.forEach(sec => sectionObserver.observe(sec));
 
-  // 3. Saltar a Secciones mediante clic en los puntos laterales
   dots.forEach(dot => {
     dot.addEventListener("click", () => {
       const targetId = dot.dataset.target;
@@ -71,7 +67,7 @@ function initEngineScrollSnap() {
 }
 
 /* ==========================================================
-   MODAL BAJO DEMANDA: "QUIÉN SOY" (MÓVIL & DESKTOP LINKS)
+   MODAL BAJO DEMANDA: "QUIÊN SOY"
    ========================================================== */
 function initOnDemandAboutModal() {
   const triggerMobile = document.querySelector(".about-trigger-btn");
@@ -83,14 +79,14 @@ function initOnDemandAboutModal() {
 
   const openAbout = () => {
     modal.classList.add("active");
-    modal.setAttribute("aria-hidden", "false"); // Accesibilidad ARIA activa
-    document.body.classList.add("is-modal-open"); // Control de estado determinista vía CSS
+    modal.setAttribute("aria-hidden", "false"); 
+    document.body.classList.add("is-modal-open"); 
   };
 
   const closeAbout = () => {
     modal.classList.remove("active");
     modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("is-modal-open"); // Libera viewport de manera segura
+    document.body.classList.remove("is-modal-open"); 
   };
 
   triggerMobile?.addEventListener("click", openAbout);
@@ -101,39 +97,93 @@ function initOnDemandAboutModal() {
     if (e.target === modal) closeAbout();
   });
 
-  // Consistencia: Permitir cerrar este modal también con la tecla Escape
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeAbout(); });
 }
 
 /* ==========================================================
-   SERVICE MODAL DETALLES BAZAR
+   ENGINE: SERVICE MODAL & MULTI-ROUTING DINÁMICO
    ========================================================== */
 function initServiceModal() {
   const modal = document.getElementById("service-modal");
   if (!modal) return;
 
-  const cards = document.querySelectorAll(".service-card");
   const closeBtn = modal.querySelector(".modal-close");
   const title = document.getElementById("modal-title");
   const description = document.getElementById("modal-description");
   const format = document.getElementById("modal-format");
   const duration = document.getElementById("modal-duration");
 
+  // Captura precisa de botones de acción hipervínculo
+  const btnConversar = modal.querySelector(".btn-conversar");
+  const btnAgenda = modal.querySelector(".btn-agenda");
+
+  // Subrutina unificada de extracción y mapeo de contexto de datos
+  const renderAndOpenModal = (dataSource) => {
+    if (!dataSource) return;
+
+    // Inyección de variables textuales bases
+    title.textContent = dataSource.dataset.title || "";
+    description.textContent = dataSource.dataset.description || "";
+
+    // Sintonización condicional de especificaciones técnicas
+    if (format) {
+      const formatVal = dataSource.dataset.format;
+      format.textContent = formatVal ? `Modalidad: ${formatVal}` : "";
+      format.style.display = formatVal ? "block" : "none";
+    }
+    if (duration) {
+      const durationVal = dataSource.dataset.duration;
+      duration.textContent = durationVal ? `Duración: ${durationVal}` : "";
+      duration.style.display = durationVal ? "block" : "none";
+    }
+
+    // Enrutamiento Dinámico e Inyección de Links de Conversión
+    if (btnConversar) {
+      const urlConversar = dataSource.dataset.urlConversar || "#";
+      btnConversar.setAttribute("href", urlConversar);
+      if (urlConversar !== "#") {
+        btnConversar.setAttribute("target", "_blank");
+      } else {
+        btnConversar.removeAttribute("target");
+      }
+    }
+
+    if (btnAgenda) {
+      const urlAgenda = dataSource.dataset.urlAgenda || "#";
+      btnAgenda.setAttribute("href", urlAgenda);
+      if (urlAgenda !== "#") {
+        btnAgenda.setAttribute("target", "_blank");
+      } else {
+        btnAgenda.removeAttribute("target");
+      }
+    }
+
+    // Ejecución de Apertura y Scroll Lock
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-modal-open");
+  };
+
+  // FLUJO A: Escuchador para las Tarjetas del Bazar de Servicios
+  const cards = document.querySelectorAll(".service-card");
   cards.forEach(card => {
     const button = card.querySelector(".service-button");
     if (!button) return;
 
     button.addEventListener("click", () => {
-      title.textContent = card.dataset.title || "";
-      description.textContent = card.dataset.description || "";
-      format.textContent = `Modalidad: ${card.dataset.format || "-"}`;
-      duration.textContent = `Duración: ${card.dataset.duration || "-"}`;
-
-      modal.classList.add("active");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("is-modal-open"); // Control centralizado de Scroll Lock
+      // Pasamos la tarjeta como la fuente de datos que contiene los datasets
+      renderAndOpenModal(card);
     });
   });
+
+  // FLUJO B: Escuchador para el nuevo Botón de Exploración en la sección Hero
+  const heroExploreBtn = document.querySelector(".hero-explore-btn");
+  if (heroExploreBtn) {
+    heroExploreBtn.addEventListener("click", () => {
+      // El botón del Hero contiene sus propios datasets, operando de forma autónoma
+      renderAndOpenModal(heroExploreBtn);
+    });
+  }
 
   const closeModal = () => {
     modal.classList.remove("active");
@@ -147,14 +197,12 @@ function initServiceModal() {
 }
 
 /* ==========================================================
-   LABERINTO UNICURSAL GENERATIVE SVG (CONCIENCIA DE RENDIMIENTO)
+   LABERINTO UNICURSAL GENERATIVE SVG
    ========================================================== */
 function initLabyrinth() {
   const heroContainer = document.getElementById("hero-labyrinth");
   if (!heroContainer) return;
 
-  // Optimizador: Solo activar la animación si la pantalla es mayor a 1024px (Desktop/Tablet)
-  // En móviles el elemento se oculta por CSS, por lo tanto no gastamos ciclos de CPU ejecutándolo
   const shouldAnimate = window.innerWidth > 1024;
   createLabyrinth(heroContainer, shouldAnimate);
 }
@@ -187,7 +235,6 @@ function createLabyrinth(container, animated = true) {
   const rotation = Math.floor(Math.random() * 360);
   labyrinth.setAttribute("transform", `rotate(${rotation} ${center} ${center})`);
 
-  // Anillos vectoriales
   const rings = 6;
   for (let i = rings; i > 0; i--) {
     const circle = document.createElementNS(svgNS, "circle");
@@ -207,7 +254,6 @@ function createLabyrinth(container, animated = true) {
     labyrinth.appendChild(circle);
   }
 
-  // Conexiones / Radios
   const spokes = 4 + Math.floor(Math.random() * 4);
   for (let i = 0; i < spokes; i++) {
     const angle = (Math.PI * 2 * i) / spokes + Math.random() * 0.45;
@@ -237,55 +283,49 @@ function createLabyrinth(container, animated = true) {
     let isElementVisible = false;
     let animationFrameId = null;
 
-    // Ciclo del Render Loop
     function animateRotation() {
-      if (!isElementVisible) return; // Si sale de pantalla, frena la ejecución de inmediato
+      if (!isElementVisible) return; 
       current += 0.015;
       labyrinth.setAttribute("transform", `rotate(${current} ${center} ${center})`);
       animationFrameId = requestAnimationFrame(animateRotation);
     }
 
-    // INTERSECTION OBSERVER: Le da conciencia de hardware al Laberinto
     const performanceObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         isElementVisible = entry.isIntersecting;
         if (isElementVisible) {
-          // Si entra a la visual, reanudamos el bucle de rotación suavemente
           cancelAnimationFrame(animationFrameId);
           animationFrameId = requestAnimationFrame(animateRotation);
         }
       });
-    }, { threshold: 0.05 }); // Se activa con apenas el 5% de visibilidad
+    }, { threshold: 0.05 }); 
 
     performanceObserver.observe(container);
   }
 }
 
 /* ==========================================================
-   CENTRADOR AUTOMÁTICO CAROUSEL BAZAR (MÓVIL RESILIENTE)
+   CENTRADOR AUTOMÁTICO CAROUSEL BAZAR 
    ========================================================= */
 function initCarouselCenter() {
   const grid = document.querySelector(".services-grid");
   if (!grid) return;
 
   const centerMiddleCard = () => {
-    // Solo actuar si nos encontramos en el breakpoint móvil configurado en CSS
     if (!window.matchMedia("(max-width: 768px)").matches) return;
 
     const cards = grid.querySelectorAll(".service-card");
     if (cards.length < 2) return;
 
-    const middleCard = cards[1]; // Tarjeta 2 centralizada por defecto
+    const middleCard = cards[1]; 
     const offsetCenter = middleCard.offsetLeft - (grid.clientWidth - middleCard.clientWidth) / 2;
     grid.scrollLeft = offsetCenter;
   };
 
-  // Posicionamiento reactivo inicial acelerado por hardware
   requestAnimationFrame(centerMiddleCard);
 
-  // Escuchadores de redundancia para cambios de escala físicos o giros de pantalla en iOS
   window.addEventListener("resize", centerMiddleCard, { passive: true });
   window.addEventListener("orientationchange", () => {
-    setTimeout(centerMiddleCard, 250); // Tiempo de gracia para el repintado de WebKit
+    setTimeout(centerMiddleCard, 250); 
   }, { passive: true });
 }
