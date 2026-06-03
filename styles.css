@@ -70,12 +70,12 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
    ======================================================= */
 .slide-navigator {
   position: fixed;
-  left: 16px;
+  left: 5px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 0.9rem;
   z-index: 90;
   opacity: 0; /* Visibilidad pasiva por defecto */
   pointer-events: none;
@@ -84,13 +84,13 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
 /* Clase de control activada por movimiento en JS */
 .slide-navigator.is-scrolling {
-  opacity: 1;
+  opacity: 0.5;
   pointer-events: auto;
 }
 
 .nav-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: 1.5px solid var(--gold-soft);
   background: transparent;
@@ -143,16 +143,16 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   justify-content: space-between;
 }
 
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 5px; }
 .brand-logo { width: 33px; height: 33px; object-fit: contain; }
-.brand-text { font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-soft); }
+.brand-text { font-size: .88rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-soft); }
 
 /* TRIGGER DE QUIÉN SOY MÓVIL */
 .about-trigger-btn {
   background: transparent;
   border: 1px solid rgba(200,161,90,0.4);
   color: var(--gold-soft);
-  padding: 6px 14px;
+  padding: 3px 14px;
   border-radius: 999px;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
