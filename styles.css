@@ -316,7 +316,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
   .section-heading h2 { 
     font-size: 2.1rem !important; /* Ajuste sutil de escala para pantallas angostas */
-    line-height: 1.15 !important; /* CORRECCIÓN CRÍTICA: Cierra el tremendo interlineado */
+    line-height: 1 !important; /* CORRECCIÓN CRÍTICA: Cierra el tremendo interlineado */
     margin: 0.2rem 0 0 0 !important; /* Elimina márgenes parásitos */
   }
 
@@ -351,7 +351,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
   
   .service-visual { 
-    height: 38% !important; 
+    height: 40% !important; 
     width: 100%;
     flex-shrink: 0;
 
@@ -360,7 +360,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     background-position: center;  /* Centra el foco del asset visual */
     background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */
   }
-  .service-body h3 { font-size: 2rem; margin-bottom: 0.5rem !important; }
+  .service-body h3 { font-size: 3rem; margin-bottom: .5rem !important;line-height: 1.1 !important; }
 
   .service-body p {
     font-size: 1.3rem !important; /* Aumentado: Texto descriptivo más legible y nítido */
