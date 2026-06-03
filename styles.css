@@ -236,8 +236,27 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   background-size: cover;      /* Scurre y escala la imagen para rellenar todo el bloque sin deformarse */
   background-position: center;  /* Centra el foco del asset visual */
   background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */}
-.service-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.service-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start !important;
+  text-align: center !important;     
+  padding: clamp(1rem, 1dvh, 1rem) 1rem !important; }
 .service-body h3 { margin: 0 0 1rem 0; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 500; }
+.service-body p {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: clamp(1rem, 2.3dvh, 1.12rem) !important; 
+    font-style: italic !important;  
+    line-height: 1.3 !important;   
+    color: var(--ink-soft) !important; 
+    padding: 0 0.1rem !important;   
+
+    /* ==========================================================================
+       EL DESBLOQUEO: Matamos el espacio fantasma que el navegador le impone al <p>
+       ========================================================================== */
+    margin-top: 0 !important; 
+    
+    /* El 'auto' inferior se encarga de absorber el vacío restante para que el 
+       botón se mantenga firmemente anclado abajo, dejando al título y cuerpo unidos */
+    margin-bottom: auto !important; 
+}
 .service-button { margin-top: 1rem; width: 100%; padding: .9rem; border: none; border-radius: 999px; background: var(--midnight); color: white; cursor: pointer; transition: var(--transition); }
 .service-button:hover { background: var(--deep-blue); }
 
@@ -301,12 +320,12 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
       flex-direction: column !important;
       justify-content: flex-start !important;
       overflow: hidden; 
-      padding-top: calc(55px + env(safe-area-inset-top)) !important; /* Ajuste milimétrico superior */
+      padding-top: calc(48px + env(safe-area-inset-top)) !important; /* Respiro superior exacto */
   }
 
-  /* 2. OPTIMIZACIÓN DE CABECERA: Reducción de aire y márgenes */
+  /* 2. OPTIMIZACIÓN DE LA CABECERA DE LA SECCIÓN */
   .section-heading { 
-    margin-bottom: 0.5rem !important; 
+    margin-bottom: clamp(0.2rem, 1dvh, 0.5rem) !important; 
     text-align: center !important;
     flex-shrink: 0;
   }
@@ -317,30 +336,30 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
   .section-heading h2 { 
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: 1.95rem !important; 
-    line-height: 1.1 !important;  /* CLAUSURA DEL VACÍO: Junta las líneas del título de la sección */
+    font-size: clamp(1.5rem, 3.8dvh, 1.95rem) !important; /* Fluido según el alto de la pantalla */
+    line-height: 1.1 !important;  
     margin: 0 !important;
     font-weight: 500 !important;
   }
 
-  /* 3. REMOCIÓN DEL SUBTÍTULO MÓVIL (Liberación de espacio vertical) */
+  /* 3. REMOCIÓN DEL SUBTÍTULO MÓVIL (Liberación de espacio vertical clave) */
   .section-heading p { 
     display: none !important; 
   }
   
-  /* 4. AJUSTE ELÁSTICO DE LAS TARJETAS */
+  /* 4. ARQUITECTURA ELÁSTICA DE LAS TARJETAS */
   .services-grid {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 1.3rem;
+    gap: 1rem;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     flex-grow: 1 !important; 
-    padding: 0.5rem 1.5rem calc(20px + env(safe-area-inset-bottom)) !important; 
+    padding: 0.2rem 1.5rem calc(10px + env(safe-area-inset-bottom)) !important; 
   }
   .services-grid::-webkit-scrollbar { display: none; }
   
@@ -351,55 +370,67 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden;
+    /* Evitamos cualquier deformación exterior */
   }
   
+  /* EL HORIZONTE FIJO: Bloquea el tamaño de la imagen para todas las tarjetas */
   .service-visual { 
-    height: 40% !important; 
+    height: 23dvh !important;    /* Proporción fija respecto al alto de la pantalla */
     width: 100%;
-    flex-shrink: 0;
-
-    /* Parámetros de control para la imagen */
-    background-size: cover;      /* Scurre y escala la imagen para rellenar todo el bloque sin deformarse */
-    background-position: center;  /* Centra el foco del asset visual */
-    background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */
+    flex-shrink: 0 !important;   /* ANCLA DE SIMETRÍA: Prohibido encogerse de forma asimétrica */
+    background-size: cover;      
+    background-position: center;  
+    background-repeat: no-repeat; 
   }
 
+  /* EL CONTENEDOR DE TEXTO: Espacio idéntico para todas las tarjetas */
   .service-body {
     flex-grow: 1 !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 1.5rem 1rem !important; /* Respiro interno generoso */
-    text-align: center !important;     /* ¡ALINEACIÓN DE POEMA ACTIVA! */
-
-    /* Desglosamos el padding para darte control absoluto del aire superior */
-    padding-top: .8rem !important;    /* <-- ACHICA o AGRANDA este número para acercar/alejar la imagen del título */
-    padding-bottom: .1rem !important; /* Espacio de resguardo al fondo de la tarjeta */
-    padding-left: 1.3rem !important;   /* Aire lateral izquierdo */
-    padding-right: 1.3rem !important;  /* Aire lateral derecho */
+    text-align: center !important;     
+    /* Compresión controlada de paddings para blindar el iPhone 12 mini */
+    padding: clamp(0.6rem, 1.8dvh, 1.1rem) 1.25rem !important; 
   }
 
+  /* SINTONIZACIÓN TIPOGRÁFICA PARA EL PEOR ESCENARIO (TÍTULOS LARGOS) */
   .service-body h3 { 
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: 2.5rem !important; /* Grande y legible */
+      /* Ajuste milimétrico para absorber "Constelaciones" en pantallas enanas */
+      font-size: clamp(1.25rem, 3.1dvh, 1.6rem) !important; 
       font-weight: 500 !important;
-      line-height: 1 !important;
+      line-height: 1.1 !important; 
       margin-top: 0;
-      margin-bottom: 0rem !important; 
+      margin-bottom: clamp(0.15rem, 0.4dvh, 0.15rem) !important; 
       color: var(--ink) !important;
   }
 
+  /* EL POEMA DESCRIPTIVO UNIFICADO */
   .service-body p {
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: 1.3rem !important; /* Tamaño noble para Serif */
-    font-style: italic !important;  /* Carga dramática/manuscrita */
-    line-height: 1.2 !important;   /* Interlineado aireado y elegante para lectura lírica */
-    color: var(--ink-soft) !important; /* Tinta grisácea orgánica, menos agresiva que el negro */
-    margin-bottom: auto !important; /* Desplaza el botón al fondo de forma fluida */
-    padding: 0 0.2rem !important;   /* Margen interno de seguridad para evitar que el texto toque los bordes */
+    /* Ajuste sutil del cuerpo para dar soporte al volumen de texto bloqueado */
+    font-size: clamp(1rem, 2.3dvh, 1.12rem) !important; 
+    font-style: italic !important;  
+    line-height: 1.3 !important;   
+    color: var(--ink-soft) !important; 
+    margin-bottom: auto !important; /* Sigue empujando el botón al fondo de forma limpia */
+    padding: 0 0.1rem !important;   
   }
 
-  /* Ajustes finos del modal bio en móvil */
-  .about-modal-window { padding: 2.5rem 1.5rem; }
-  .about-image { order: -1; }
+  /* EL BOTÓN DE ACCIÓN (ESTABILIDAD ABSOLUTA) */
+  .service-button {
+    margin-top: 0.4rem !important; 
+    width: 100%;
+    padding: clamp(0.55rem, 1.6dvh, 0.8rem) !important; 
+    border: none;
+    border-radius: 999px;
+    background: var(--midnight);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0 !important; /* Blindado contra colapsos */
+
+    margin-bottom: 0.3rem !important;
+  }
 }
