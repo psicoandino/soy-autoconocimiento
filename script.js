@@ -21,7 +21,7 @@ function initEngineScrollSnap() {
 
   if (!container || !navigator) return;
 
-  // 1. Control del desvanecimiento pasivo (Fade In/Out de la barra lateral)
+  // 1. Control del desvanecimiento pasivo (Optimizado con bandera pasiva)
   let isScrollingTimeout;
   container.addEventListener("scroll", () => {
     navigator.classList.add("is-scrolling");
@@ -30,7 +30,7 @@ function initEngineScrollSnap() {
     isScrollingTimeout = setTimeout(() => {
       navigator.classList.remove("is-scrolling");
     }, 800); // Se desvanece tras 800ms sin interactuar
-  });
+  }, { passive: true }); // Optimiza el hilo de renderizado del navegador
 
   // 2. Sincronización Bidireccional: Detectar sección activa (IntersectionObserver)
   const observerOptions = {
@@ -83,12 +83,14 @@ function initOnDemandAboutModal() {
 
   const openAbout = () => {
     modal.classList.add("active");
-    document.body.style.overflow = "hidden"; // Scroll lock activo
+    modal.setAttribute("aria-hidden", "false"); // Accesibilidad ARIA activa
+    document.body.classList.add("is-modal-open"); // Control de estado determinista vía CSS
   };
 
   const closeAbout = () => {
     modal.classList.remove("active");
-    document.body.style.overflow = ""; // Liberar viewport
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-modal-open"); // Libera viewport de manera segura
   };
 
   triggerMobile?.addEventListener("click", openAbout);
@@ -98,6 +100,9 @@ function initOnDemandAboutModal() {
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeAbout();
   });
+
+  // Consistencia: Permitir cerrar este modal también con la tecla Escape
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeAbout(); });
 }
 
 /* ==========================================================
@@ -113,7 +118,6 @@ function initServiceModal() {
   const description = document.getElementById("modal-description");
   const format = document.getElementById("modal-format");
   const duration = document.getElementById("modal-duration");
-  const price = document.getElementById("modal-price");
 
   cards.forEach(card => {
     const button = card.querySelector(".service-button");
@@ -124,16 +128,17 @@ function initServiceModal() {
       description.textContent = card.dataset.description || "";
       format.textContent = `Modalidad: ${card.dataset.format || "-"}`;
       duration.textContent = `Duración: ${card.dataset.duration || "-"}`;
-      price.textContent = `Valor: ${card.dataset.price || "-"}`;
 
       modal.classList.add("active");
-      document.body.style.overflow = "hidden";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("is-modal-open"); // Control centralizado de Scroll Lock
     });
   });
 
   const closeModal = () => {
     modal.classList.remove("active");
-    document.body.style.overflow = "";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-modal-open");
   };
 
   closeBtn?.addEventListener("click", closeModal);
@@ -142,11 +147,16 @@ function initServiceModal() {
 }
 
 /* ==========================================================
-   LABERINTO UNICURSAL GENERATIVE SVG
+   LABERINTO UNICURSAL GENERATIVE SVG (CONCIENCIA DE RENDIMIENTO)
    ========================================================== */
 function initLabyrinth() {
   const heroContainer = document.getElementById("hero-labyrinth");
-  createLabyrinth(heroContainer, true);
+  if (!heroContainer) return;
+
+  // Optimizador: Solo activar la animación si la pantalla es mayor a 1024px (Desktop/Tablet)
+  // En móviles el elemento se oculta por CSS, por lo tanto no gastamos ciclos de CPU ejecutándolo
+  const shouldAnimate = window.innerWidth > 1024;
+  createLabyrinth(heroContainer, shouldAnimate);
 }
 
 function createLabyrinth(container, animated = true) {
@@ -224,28 +234,58 @@ function createLabyrinth(container, animated = true) {
 
   if (animated) {
     let current = rotation;
+    let isElementVisible = false;
+    let animationFrameId = null;
+
+    // Ciclo del Render Loop
     function animateRotation() {
+      if (!isElementVisible) return; // Si sale de pantalla, frena la ejecución de inmediato
       current += 0.015;
       labyrinth.setAttribute("transform", `rotate(${current} ${center} ${center})`);
-      requestAnimationFrame(animateRotation);
+      animationFrameId = requestAnimationFrame(animateRotation);
     }
-    animateRotation();
+
+    // INTERSECTION OBSERVER: Le da conciencia de hardware al Laberinto
+    const performanceObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isElementVisible = entry.isIntersecting;
+        if (isElementVisible) {
+          // Si entra a la visual, reanudamos el bucle de rotación suavemente
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = requestAnimationFrame(animateRotation);
+        }
+      });
+    }, { threshold: 0.05 }); // Se activa con apenas el 5% de visibilidad
+
+    performanceObserver.observe(container);
   }
 }
 
 /* ==========================================================
-   CENTRADOR AUTOMÁTICO CAROUSEL BAZAR (MÓVIL)
+   CENTRADOR AUTOMÁTICO CAROUSEL BAZAR (MÓVIL RESILIENTE)
    ========================================================= */
 function initCarouselCenter() {
   const grid = document.querySelector(".services-grid");
   if (!grid) return;
 
-  if (window.innerWidth <= 768) {
+  const centerMiddleCard = () => {
+    // Solo actuar si nos encontramos en el breakpoint móvil configurado en CSS
+    if (!window.matchMedia("(max-width: 768px)").matches) return;
+
     const cards = grid.querySelectorAll(".service-card");
-    if (cards.length >= 2) {
-      const middleCard = cards[1]; 
-      const offsetCenter = middleCard.offsetLeft - (grid.clientWidth - middleCard.clientWidth) / 2;
-      grid.scrollLeft = offsetCenter;
-    }
-  }
+    if (cards.length < 2) return;
+
+    const middleCard = cards[1]; // Tarjeta 2 centralizada por defecto
+    const offsetCenter = middleCard.offsetLeft - (grid.clientWidth - middleCard.clientWidth) / 2;
+    grid.scrollLeft = offsetCenter;
+  };
+
+  // Posicionamiento reactivo inicial acelerado por hardware
+  requestAnimationFrame(centerMiddleCard);
+
+  // Escuchadores de redundancia para cambios de escala físicos o giros de pantalla en iOS
+  window.addEventListener("resize", centerMiddleCard, { passive: true });
+  window.addEventListener("orientationchange", () => {
+    setTimeout(centerMiddleCard, 250); // Tiempo de gracia para el repintado de WebKit
+  }, { passive: true });
 }

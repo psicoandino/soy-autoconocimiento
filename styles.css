@@ -17,6 +17,9 @@
   --ink-soft: #556070;
   --line: rgba(255,255,255,.08);
 
+  --aurora-glow: rgba(38, 74, 128, 0.25); /* Resplandor azul terapéutico */
+  --line-subtle: rgba(200, 161, 90, 0.03); /* Líneas de laberinto doradas fantasmas */
+
   --shadow-sm: 0 10px 30px rgba(0,0,0,.08);
   --shadow-md: 0 20px 60px rgba(0,0,0,.12);
   --shadow-lg: 0 40px 100px rgba(0,0,0,.18);
@@ -26,6 +29,13 @@
   --radius-lg: 32px;
   --transition: all .35s cubic-bezier(0.25, 1, 0.5, 1);
   --container: min(1200px, calc(100% - 2rem));
+
+  --app-height: 100dvh;
+  --gold-glow: rgba(200, 161, 90, 0.3);
+
+  @supports not (height: 100dvh) {
+    --app-height: 100vh;
+  }
 }
 
 /* RESET STANDARD */
@@ -34,20 +44,29 @@
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
-  background: var(--night);
+  background: radial-gradient(
+    circle at 50% 40%, 
+    var(--midnight) 0%, 
+    var(--night) 75%
+  );
   color: var(--paper);
   line-height: 1.7;
   overflow: hidden; /* Delegamos el scroll al viewport contenedor snap */
   -webkit-font-smoothing: antialiased;
 }
 
+/* Modificar en el body el control de bloqueo modal */
+body.is-modal-open {
+  overflow: hidden !important;
+}
+
 img { display: block; width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; background: transparent; border: none; cursor: pointer; padding: 0; }
 
-/* ARQUITECTURA DE SCROLL SNAP (MÓVIL PRINCIPAL) */
+/* ARQUITECTURA DE SCROLL SNAP (MÓVIL PRINCIPAL) - CONTROL DINÁMICO */
 .scroll-snap-container {
-  height: 100vh;
+  height: var(--app-height);
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -57,7 +76,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: 100vh;
+  height: var(--app-height);
+  min-height: var(--app-height);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,16 +130,25 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   z-index: -10;
   pointer-events: none;
   overflow: hidden;
+
+  /* Red de líneas abstractas que cruzan el fondo simulando trazos de laberinto */
+  background-image: 
+    repeating-linear-gradient(60deg, var(--line-subtle) 0px, var(--line-subtle) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(-60deg, var(--line-subtle) 0px, var(--line-subtle) 1px, transparent 1px, transparent 40px);
 }
 
 #labyrinth-container {
   position: absolute;
-  right: -10vw;
+  right: -15vw;
   top: -5vh;
-  width: 77vw;
-  height: 77vw;
+  width: 88vw;
+  height: 88vw;
   background: url("laberinto.svg") center / contain no-repeat, url("rosa.svg") center / contain no-repeat;
-  opacity: .10;
+  /* Bajamos la opacidad para que sea un susurro en el fondo y no compita con el texto */
+  opacity: 0.06; 
+  /* Hardware acceleration para equipos antiguos */
+  transform: translate3d(0, 0, 0); 
+  filter: blur(1px); /* Suavizado terapéutico */
 }
 
 /* SITE HEADER */
@@ -130,14 +159,14 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   width: 100%;
   z-index: 100;
   backdrop-filter: blur(16px);
-  background: rgba(7,20,38,.82);
+  background: rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(200,161,90,.15);
 }
 
 .header-inner {
   width: var(--container);
   margin: auto;
-  min-height: 65px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -152,15 +181,16 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   background: transparent;
   border: 1px solid rgba(200,161,90,0.4);
   color: var(--gold-soft);
-  padding: 3px 14px;
+  padding: 3px 6px;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   letter-spacing: 0.05em;
   font-weight: 500;
   transition: var(--transition);
 }
 
-.about-trigger-btn:shadow {
+.about-trigger-btn:hover,
+.about-trigger-btn:focus-visible {
   background: rgba(200,161,90,0.1);
 }
 
@@ -180,9 +210,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
 .hero-content { max-width: 650px; }
 .section-mark { display: inline-block; color: var(--gold-soft); letter-spacing: .15em; text-transform: uppercase; font-size: .75rem; margin-bottom: 1rem; }
-.hero-section h1 { margin: 0 0 2rem 0; font-family: "Cormorant Garamond", serif; font-size: clamp(3.5rem,7vw,6rem); line-height: .95; font-weight: 400; }
-.hero-lead { font-size: 1.4rem; color: rgba(255,255,255,.82); max-width: 620px; margin-bottom: 2.5rem; }
-
+.hero-section h1 { margin: 0 0 1rem 0; font-family: "Cormorant Garamond", serif; font-size: clamp(3.5rem,7vw,6rem); line-height: .95; font-weight: 400; }
+.hero-lead { font-size: 1.15rem; color: rgba(255,255,255,.82); max-width: 620px; margin-bottom: 1.5rem; line-height: 1.5;}
 .hero-symbol { display: flex; justify-content: center; align-items: center; }
 #hero-labyrinth { width: min(480px,90vw); aspect-ratio: 1; }
 
@@ -200,10 +229,13 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 .section-heading h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.5rem,5vw,4rem); font-weight: 400; margin: .5rem 0 1rem; }
 .section-heading p { max-width: 700px; margin: auto; color: rgba(255,255,255,.75); }
 
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }
-.service-card { background: var(--paper); color: var(--ink); border-radius: var(--radius-md); overflow: hidden; transition: var(--transition); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; flex-grow: .9; }
+.service-card { background: var(--paper); color: var(--ink); border-radius: var(--radius-md); overflow: hidden; transition: var(--transition); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; height:100%}
 .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-.service-visual { height: 160px; background: linear-gradient(135deg, var(--midnight), var(--deep-blue)); }
+.service-visual { height: 38%; width:100%;  background: linear-gradient(135deg, var(--midnight), var(--deep-blue)); flex-shrink: 0;
+  background-size: cover;      /* Scurre y escala la imagen para rellenar todo el bloque sin deformarse */
+  background-position: center;  /* Centra el foco del asset visual */
+  background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */}
 .service-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
 .service-body h3 { margin: 0 0 1rem 0; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 500; }
 .service-button { margin-top: 1rem; width: 100%; padding: .9rem; border: none; border-radius: 999px; background: var(--midnight); color: white; cursor: pointer; transition: var(--transition); }
@@ -246,8 +278,12 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
    RESPONSIVE DESIGN AUTOMATION
    ======================================================= */
 @media (max-width: 1024px) {
-  .hero-section { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-  .hero-content { display: flex; flex-direction: column; align-items: center; }
+  .hero-section { grid-template-columns: 1fr; text-align: center; justify-items: center; justify-content: flex-start; padding-top: 7vh; }
+  .hero-content { display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    max-width: 340px; 
+    height: auto; }
   .hero-symbol { display: none; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -258,29 +294,80 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   .main-nav { display: none; } /* Ocultamos navegación extendida desktop */
   .slide-navigator { display: flex; } /* Activamos puntos de salto lateral */
 
-  /* CARRUSEL HORIZONTAL EN EL SLIDE 2 BAZAR */
-  .services-section { height: 100vh; overflow: hidden; padding-top: 80px; }
+  /* 1. COMPACTACIÓN DE LA SECCIÓN BAZAR (SLIDE 2) */
+  .services-section { 
+    height: var(--app-height) !important; /* Asegura el uso de 100dvh */
+    overflow: hidden; 
+    padding-top: calc(65px + env(safe-area-inset-top)) !important; /* Reduce espacio superior */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  /* 2. OPTIMIZACIÓN DE CABECERA: Reducción de aire y márgenes */
+  .section-heading { 
+    margin-bottom: 1rem !important; /* Reducimos el espacio debajo del bloque de título */
+    text-align: center;
+  }
+
+  .section-heading .section-mark {
+    margin-bottom: 0.2rem !important; /* Acerca "EL BAZAR" al título principal */
+  }
+
+  .section-heading h2 { 
+    font-size: 2.1rem !important; /* Ajuste sutil de escala para pantallas angostas */
+    line-height: 1.15 !important; /* CORRECCIÓN CRÍTICA: Cierra el tremendo interlineado */
+    margin: 0.2rem 0 0 0 !important; /* Elimina márgenes parásitos */
+  }
+
+  /* 3. REMOCIÓN DEL SUBTÍTULO MÓVIL (Liberación de espacio vertical) */
+  .section-heading p { 
+    display: none !important; 
+  }
+  
+  /* 4. AJUSTE ELÁSTICO DE LAS TARJETAS */
   .services-grid {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1.2rem;
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1.5rem !important; /* Compacta el padding interno */
     width: 100vw;
-    margin-left: calc(-50vw + 50%); /* Rompe el padding del container padre */
+    margin-left: calc(-50vw + 50%);
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
   .services-grid::-webkit-scrollbar { display: none; }
   
   .service-card {
     flex: 0 0 82%;
     scroll-snap-align: center;
-    max-height: 52vh;
+    max-height: none !important; /* Eliminamos el límite del 52vh que devoraba el botón */
+    min-height: 380px; /* Altura mínima segura para mantener consistencia visual */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
-  .service-visual { height: 120px; }
-  .service-body h3 { font-size: 1.4rem; }
+  .service-visual { 
+    height: 38% !important; 
+    width: 100%;
+    flex-shrink: 0;
+
+    /* Parámetros de control para la imagen */
+    background-size: cover;      /* Scurre y escala la imagen para rellenar todo el bloque sin deformarse */
+    background-position: center;  /* Centra el foco del asset visual */
+    background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */
+  }
+  .service-body h3 { font-size: 2rem; margin-bottom: 0.5rem !important; }
+
+  .service-body p {
+    font-size: 1.3rem !important; /* Aumentado: Texto descriptivo más legible y nítido */
+    line-height: 1.55 !important;  /* Interlineado óptimo para bloques de lectura cortos */
+    color: #2c3e50; /* O el color corporativo que manejes para el contraste */
+    margin-bottom: auto !important; /* Empuja el botón "Explorar" hacia abajo de forma natural */
+  }
 
   /* Ajustes finos del modal bio en móvil */
   .about-modal-window { padding: 2.5rem 1.5rem; }
