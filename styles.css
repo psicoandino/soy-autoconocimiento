@@ -369,29 +369,34 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 1.8rem 1.4rem !important; /* Respiro interno generoso */
+    padding: 1.5rem 1rem !important; /* Respiro interno generoso */
     text-align: center !important;     /* ¡ALINEACIÓN DE POEMA ACTIVA! */
+
+    /* Desglosamos el padding para darte control absoluto del aire superior */
+    padding-top: .8rem !important;    /* <-- ACHICA o AGRANDA este número para acercar/alejar la imagen del título */
+    padding-bottom: .1rem !important; /* Espacio de resguardo al fondo de la tarjeta */
+    padding-left: 1.3rem !important;   /* Aire lateral izquierdo */
+    padding-right: 1.3rem !important;  /* Aire lateral derecho */
   }
 
   .service-body h3 { 
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: 4rem !important; /* Grande y legible */
+      font-size: 2.5rem !important; /* Grande y legible */
       font-weight: 500 !important;
       line-height: 1 !important;
       margin-top: 0;
-      margin-bottom: 0.8rem !important; 
+      margin-bottom: 0rem !important; 
       color: var(--ink) !important;
   }
 
   .service-body p {
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: 1.5rem !important; /* Tamaño noble para Serif */
+    font-size: 1.3rem !important; /* Tamaño noble para Serif */
     font-style: italic !important;  /* Carga dramática/manuscrita */
-    font-weight: 400 !important;
-    line-height: 1.45 !important;   /* Interlineado aireado y elegante para lectura lírica */
+    line-height: 1.2 !important;   /* Interlineado aireado y elegante para lectura lírica */
     color: var(--ink-soft) !important; /* Tinta grisácea orgánica, menos agresiva que el negro */
     margin-bottom: auto !important; /* Desplaza el botón al fondo de forma fluida */
-    padding: 0 0.4rem !important;   /* Margen interno de seguridad para evitar que el texto toque los bordes */
+    padding: 0 0.2rem !important;   /* Margen interno de seguridad para evitar que el texto toque los bordes */
   }
 
   /* Ajustes finos del modal bio en móvil */
