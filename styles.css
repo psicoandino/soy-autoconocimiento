@@ -296,28 +296,31 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
   /* 1. COMPACTACIÓN DE LA SECCIÓN BAZAR (SLIDE 2) */
   .services-section { 
-    height: var(--app-height) !important; /* Asegura el uso de 100dvh */
-    overflow: hidden; 
-    padding-top: calc(65px + env(safe-area-inset-top)) !important; /* Reduce espacio superior */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
+      height: 100dvh !important; 
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      overflow: hidden; 
+      padding-top: calc(55px + env(safe-area-inset-top)) !important; /* Ajuste milimétrico superior */
   }
 
   /* 2. OPTIMIZACIÓN DE CABECERA: Reducción de aire y márgenes */
   .section-heading { 
-    margin-bottom: 1rem !important; /* Reducimos el espacio debajo del bloque de título */
-    text-align: center;
+    margin-bottom: 0.5rem !important; 
+    text-align: center !important;
+    flex-shrink: 0;
   }
 
   .section-heading .section-mark {
-    margin-bottom: 0.2rem !important; /* Acerca "EL BAZAR" al título principal */
+    margin-bottom: 0.1rem !important;
   }
 
   .section-heading h2 { 
-    font-size: 2.1rem !important; /* Ajuste sutil de escala para pantallas angostas */
-    line-height: 1 !important; /* CORRECCIÓN CRÍTICA: Cierra el tremendo interlineado */
-    margin: 0.2rem 0 0 0 !important; /* Elimina márgenes parásitos */
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 1.95rem !important; 
+    line-height: 1.1 !important;  /* CLAUSURA DEL VACÍO: Junta las líneas del título de la sección */
+    margin: 0 !important;
+    font-weight: 500 !important;
   }
 
   /* 3. REMOCIÓN DEL SUBTÍTULO MÓVIL (Liberación de espacio vertical) */
@@ -331,23 +334,23 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     flex-direction: row !important;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 1.2rem;
-    padding: 0.5rem 1.5rem !important; /* Compacta el padding interno */
+    gap: 1.3rem;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+    flex-grow: 1 !important; 
+    padding: 0.5rem 1.5rem calc(20px + env(safe-area-inset-bottom)) !important; 
   }
   .services-grid::-webkit-scrollbar { display: none; }
   
   .service-card {
-    flex: 0 0 82%;
+    flex: 0 0 84%;
     scroll-snap-align: center;
-    max-height: none !important; /* Eliminamos el límite del 52vh que devoraba el botón */
-    min-height: 380px; /* Altura mínima segura para mantener consistencia visual */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    height: 100% !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden;
   }
   
   .service-visual { 
@@ -360,13 +363,35 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     background-position: center;  /* Centra el foco del asset visual */
     background-repeat: no-repeat; /* Evita duplicaciones parásitas del archivo */
   }
-  .service-body h3 { font-size: 3rem; margin-bottom: .5rem !important;line-height: 1.1 !important; }
+
+  .service-body {
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 1.8rem 1.4rem !important; /* Respiro interno generoso */
+    text-align: center !important;     /* ¡ALINEACIÓN DE POEMA ACTIVA! */
+  }
+
+  .service-body h3 { 
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: 4rem !important; /* Grande y legible */
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      margin-top: 0;
+      margin-bottom: 0.8rem !important; 
+      color: var(--ink) !important;
+  }
 
   .service-body p {
-    font-size: 1.3rem !important; /* Aumentado: Texto descriptivo más legible y nítido */
-    line-height: 1.55 !important;  /* Interlineado óptimo para bloques de lectura cortos */
-    color: #2c3e50; /* O el color corporativo que manejes para el contraste */
-    margin-bottom: auto !important; /* Empuja el botón "Explorar" hacia abajo de forma natural */
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 1.5rem !important; /* Tamaño noble para Serif */
+    font-style: italic !important;  /* Carga dramática/manuscrita */
+    font-weight: 400 !important;
+    line-height: 1.45 !important;   /* Interlineado aireado y elegante para lectura lírica */
+    color: var(--ink-soft) !important; /* Tinta grisácea orgánica, menos agresiva que el negro */
+    margin-bottom: auto !important; /* Desplaza el botón al fondo de forma fluida */
+    padding: 0 0.4rem !important;   /* Margen interno de seguridad para evitar que el texto toque los bordes */
   }
 
   /* Ajustes finos del modal bio en móvil */
