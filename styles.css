@@ -170,15 +170,15 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
 .brand { display: flex; align-items: center; gap: 5px; }
 .brand-logo { width: 33px; height: 33px; object-fit: contain; }
-.brand-text { font-size: .88rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-soft); }
+.brand-text { font-size: .88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gold-soft); }
 
 .about-trigger-btn {
   background: transparent;
   border: 1px solid rgba(200,161,90,0.4);
   padding: 4px;                    /* espacio alrededor de la foto */
   border-radius: 50%;              /* hace que sea circular */
-  width: 42px;                     /* tamaño del botón */
-  height: 42px;
+  width: 33px;                     /* tamaño del botón */
+  height: 33px;
   overflow: hidden;                /* importante para que no se salga la foto */
   transition: var(--transition);
   display: flex;
@@ -445,7 +445,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
   
   .service-visual { 
-    height: 44dvh !important;    
+    height: 33dvh !important;    
     width: 100%;
     flex-shrink: 0 !important;   
     background-size: cover;      
@@ -468,32 +468,34 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     flex-grow: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-
-    height: 100%;
-
+    height: 100dvh;
     justify-content: space-between !important;
     text-align: center !important;     
     padding: clamp(0.6rem, 1.8dvh, 1.1rem) 1.25rem !important; 
   }
 
   .service-body h3 { 
+      margin: 0 0 0.6rem 0;
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.65rem, 4.8dvh, 2.1rem) !important; 
+      font-size: clamp(2.65rem, 4dvh, 2.8rem) !important; 
       font-weight: 500 !important;
-      line-height: 1.1 !important; 
+      line-height: 0.9 !important; 
       margin-top: 0;
       margin-bottom: clamp(0.15rem, 0.4dvh, 0.15rem) !important; 
       color: var(--ink) !important;
   }
 
   .service-body p {
+    flex-grow: 1 !important;
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: clamp(1.15rem, 3.1dvh, 1.35rem) !important; 
+    font-size: clamp(1.7dvh, 3.1dvh, 3.35dvh) !important; 
     font-style: italic !important;  
-    line-height: 1.3 !important;   
+    line-height: 4dvh !important;   
     color: var(--ink-soft) !important; 
     margin-bottom: auto !important; 
     padding: 0 0.1rem !important;   
+    align-items: center;
+    display: flex;
   }
 
   .service-button {
@@ -508,5 +510,6 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     transition: var(--transition);
     flex-shrink: 0 !important; 
     margin-bottom: 0.3rem !important;
+    font-size: clamp(1.15rem, 3.1dvh, 1.35rem) !important; 
   }
 }
