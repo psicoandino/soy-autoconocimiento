@@ -629,3 +629,64 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   padding: 0 !important;
   margin: 1rem 0 !important;
 }
+
+/* DESKTOP ADJUSTMENTS */
+@media (min-width: 769px) {
+
+  /* Hide nav links, keep avatar */
+  .main-nav {
+    display: none;
+  }
+
+  /* Cards fill available vertical space */
+  .services-section {
+    justify-content: flex-start !important;
+    padding-bottom: 10rem !important;
+  }
+
+  .services-grid {
+    flex: 1 !important;
+    min-height: 0 !important;
+    grid-template-rows: 1fr !important;
+    align-items: stretch !important;
+  }
+
+  .service-visual {
+    flex: 0 0 40% !important;
+  }
+
+  .service-body {
+    flex: 1 !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .service-body h3 {
+    font-size: clamp(1.8rem, 2.2vw, 2.4rem) !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .service-body p {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: clamp(1.1rem, 1.3vw, 1.4rem) !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+
+  .service-button {
+    font-size: 1.1rem !important;
+    padding: 1rem !important;
+    margin-top: 0 !important;
+  }
+
+  .services-section {
+    padding-top: calc(var(--header-height)-1rem) !important;
+  }
+
+  .section-heading {
+    margin-bottom: clamp(0.8rem, 1.5dvh, 1.2rem) !important;
+  }
+
+}
