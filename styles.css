@@ -480,7 +480,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
       margin: 0 0 0.6rem 0;
       font-family: 'Cormorant Garamond', serif !important;
       font-size: clamp(1.8rem, 4dvh, 2.8rem) !important; 
-      font-weight: 600 !important;
+      font-weight: 1000 !important;
       line-height: 1.05 !important;   
       margin-top: 0;
       margin-bottom: clamp(0.15rem, 0.4dvh, 0.15rem) !important; 
@@ -490,8 +490,9 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   .service-body p {
     flex-grow: 1 !important;
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: clamp(1.1rem, 2.8dvh, 1.5rem) !important;
+    font-size: clamp(1.3rem, 2.8dvh, 1.7rem) !important;
     font-style: italic !important;  
+    font-weight: 700 !important;
     line-height: 1.55 !important;
     color: var(--ink-soft) !important; 
     margin: 0 !important;
@@ -515,4 +516,59 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     margin-bottom: 0.3rem !important;
     font-size: clamp(1.15rem, 3.1dvh, 1.35rem) !important; 
   }
+}
+
+/* ABOUT MODAL - MOBILE */
+.about-modal-window {
+  padding: 2rem 1.5rem !important;
+  max-height: 88dvh !important;
+  overflow-y: auto !important;
+}
+
+.about-grid {
+  grid-template-columns: 1fr !important;
+  gap: 1.2rem !important;
+}
+
+.about-image {
+  max-width: 140px !important;
+  margin: 0 auto !important;
+}
+
+.image-frame {
+  padding: 0.3rem !important;        /* thinner white border */
+  border-radius: 50% !important;     /* circular frame */
+  overflow: hidden !important;       /* clips the image to circle */
+}
+
+.image-frame img {
+  border-radius: 50% !important;     /* image itself also circular */
+  aspect-ratio: 1 !important;        /* forces perfect square → circle */
+  object-fit: cover !important;      /* no distortion */
+}
+
+.about-content h2 {
+  font-size: clamp(1.6rem, 5vw, 2rem) !important;
+  margin: 0.3rem 0 0.8rem 0 !important;
+  line-height: 1.1 !important;
+}
+
+.about-content {
+  text-align: center !important;     /* everything centered like a poem */
+}
+
+.about-content p {
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.signature-block {
+  margin-top: 1.2rem !important;
+}
+
+.signature-line {
+  width: 300px !important;           /* shorter line for mobile */
+  margin: 0 auto !important;  
+  margin-bottom: 0.5rem !important;       /* centers the gold line too */
 }
