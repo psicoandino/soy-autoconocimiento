@@ -525,6 +525,25 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   overflow-y: auto !important;
 }
 
+.about-modal-window .section-mark {
+  display: none !important;
+}
+
+.about-modal-window .modal-close {
+  position: sticky !important;
+  top: 0 !important;
+  float: right !important;
+  z-index: 10 !important;
+  background: var(--paper) !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+
 .about-grid {
   grid-template-columns: 1fr !important;
   gap: 1.2rem !important;
