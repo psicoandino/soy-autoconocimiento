@@ -623,3 +623,9 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   align-items: center !important;
   justify-content: center !important;
 }
+
+.modal-specs {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 1rem 0 !important;
+}
