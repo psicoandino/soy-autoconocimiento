@@ -488,16 +488,17 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
 
   .service-body p {
-    flex-grow: 0 !important;
+    flex-grow: 1 !important;
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: clamp(0.9rem, 1.6dvh, 1.1rem) !important; 
+    font-size: clamp(1.05rem, 2.4dvh, 1.4rem) !important;
     font-style: italic !important;  
-    line-height: 1.45 !important;
+    line-height: 1.55 !important;
     color: var(--ink-soft) !important; 
-    margin-bottom: 0 !important; 
-    padding: 0 0.1rem !important;   
+    margin: 0 !important;
+    padding: 0.3rem 0.2rem !important; 
     align-items: center;
     display: flex;
+    text-align: center !important;
   }
 
   .service-button {
