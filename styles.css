@@ -470,8 +470,9 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     flex-grow: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     text-align: center !important;     
+    gap: 0.5rem;
     padding: clamp(0.6rem, 1.8dvh, 1.1rem) 1.25rem !important; 
   }
 
@@ -493,14 +494,14 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     font-style: italic !important;  
     line-height: 1.45 !important;
     color: var(--ink-soft) !important; 
-    margin-bottom: auto !important; 
+    margin-bottom: 0 !important; 
     padding: 0 0.1rem !important;   
     align-items: center;
     display: flex;
   }
 
   .service-button {
-    margin-top: 0.4rem !important; 
+    margin-top: auto !important; 
     width: 100%;
     padding: clamp(0.55rem, 1.6dvh, 0.8rem) !important; 
     border: none;
