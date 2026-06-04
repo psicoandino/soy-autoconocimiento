@@ -33,7 +33,7 @@
   --app-height: 100dvh;
   --gold-glow: rgba(200, 161, 90, 0.3);
 
-  --header-height: 80px; 
+  --header-height: 90px; 
 
   @supports not (height: 100dvh) {
     --app-height: 100vh;
@@ -162,7 +162,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 .header-inner {
   width: var(--container);
   margin: auto;
-  min-height: 44px;
+  min-height: 55px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -177,8 +177,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   border: 1px solid rgba(200,161,90,0.4);
   padding: 4px;                    /* espacio alrededor de la foto */
   border-radius: 50%;              /* hace que sea circular */
-  width: 33px;                     /* tamaño del botón */
-  height: 33px;
+  width: 44px;                     /* tamaño del botón */
+  height: 44px;
   overflow: hidden;                /* importante para que no se salga la foto */
   transition: var(--transition);
   display: flex;
@@ -362,6 +362,10 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 .modal-window { background: var(--paper); color: var(--ink); width: min(650px,100%); border-radius: var(--radius-lg); padding: 2.5rem; position: relative; max-height: 90vh; overflow-y: auto; }
 .modal-close { position: absolute; top: 1rem; right: 1rem; border: none; background: transparent; font-size: 2rem; cursor: pointer; color: var(--ink-soft); }
+.modal-content {text-align: center !important;}
+.modal-actions {
+  justify-content: center !important;
+}
 
 .about-modal-window { width: min(1000px, 100%); padding: 3.5rem 2.5rem; }
 .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 4rem; align-items: center; }
@@ -519,6 +523,13 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 }
 
 /* ABOUT MODAL - MOBILE */
+#about-modal {
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 1.2rem !important;
+}
+
 .about-modal-window {
   padding: 2rem 1.5rem !important;
   max-height: 88dvh !important;
@@ -529,19 +540,20 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   display: none !important;
 }
 
-.about-modal-window .modal-close {
-  position: sticky !important;
-  top: 0 !important;
-  float: right !important;
-  z-index: 10 !important;
-  background: var(--paper) !important;
+.about-close-external {
+  width: 48px !important;
+  height: 48px !important;
   border-radius: 50% !important;
-  width: 36px !important;
-  height: 36px !important;
+  border: 1.5px solid rgba(200,161,90,0.6) !important;
+  background: rgba(255,255,255,0.12) !important;
+  backdrop-filter: blur(8px) !important;
+  color: white !important;
+  font-size: 1.4rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+  flex-shrink: 0 !important;
+  position: static !important;  /* removes absolute override */
 }
 
 .about-grid {
@@ -590,4 +602,24 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   width: 300px !important;           /* shorter line for mobile */
   margin: 0 auto !important;  
   margin-bottom: 0.5rem !important;       /* centers the gold line too */
+}
+
+#service-modal {
+  flex-direction: column !important;
+  gap: 1.2rem !important;
+}
+
+.service-close-external {
+  position: static !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(200,161,90,0.6) !important;
+  background: rgba(255,255,255,0.12) !important;
+  backdrop-filter: blur(8px) !important;
+  color: white !important;
+  font-size: 1.4rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }

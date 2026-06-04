@@ -139,13 +139,11 @@ function initServiceModal() {
 
     // Enrutamiento Dinámico e Inyección de Links de Conversión
     if (btnConversar) {
-      const urlConversar = dataSource.dataset.urlConversar || "#";
-      btnConversar.setAttribute("href", urlConversar);
-      if (urlConversar !== "#") {
-        btnConversar.setAttribute("target", "_blank");
-      } else {
-        btnConversar.removeAttribute("target");
-      }
+      const phone = "56962391328"; // ← your real number here
+      const serviceName = dataSource.dataset.title || "";
+      const message = encodeURIComponent(`Hola, me interesa saber más sobre: ${serviceName}`);
+      btnConversar.setAttribute("href", `https://wa.me/${phone}?text=${message}`);
+      btnConversar.setAttribute("target", "_blank");
     }
 
     if (btnAgenda) {
