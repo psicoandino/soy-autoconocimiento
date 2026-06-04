@@ -170,7 +170,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
 .brand { display: flex; align-items: center; gap: 5px; }
 .brand-logo { width: 33px; height: 33px; object-fit: contain; }
-.brand-text { font-size: .88rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gold-soft); }
+.brand-text { font-size: .88rem; letter-spacing: 0.1em; color: var(--gold-soft); }
 
 .about-trigger-btn {
   background: transparent;
@@ -454,8 +454,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
   
   .service-visual { 
-    height: clamp(130px, 28dvh, 180px) !important; 
-    width: 90;
+    height: clamp(130px, 24dvh, 180px) !important; 
+    width: 100% !important;
     flex-shrink: 0 !important;   
     background-size: cover;      
     background-position: center;  
@@ -511,7 +511,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
 
   .service-button {
-    margin-top: auto !important; 
+    margin-top: 0.5rem !important; 
     width: 100%;
     padding: clamp(0.55rem, 1.6dvh, 0.8rem) !important; 
     border: none;
@@ -521,7 +521,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     cursor: pointer;
     transition: var(--transition);
     flex-shrink: 0 !important; 
-    margin-bottom: 0.3rem !important;
+    margin-bottom: 0.5rem !important;
     font-size: clamp(1.15rem, 3.1dvh, 1.35rem) !important; 
   }
 }
