@@ -444,7 +444,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   .services-grid::-webkit-scrollbar { display: none; }
   
   .service-card {
-    flex: 0 0 84%;
+    display: flex !important;
+    flex: 0 0 93%;
     scroll-snap-align: center;
     height: 100% !important; 
     display: flex !important;
@@ -453,8 +454,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
   
   .service-visual { 
-    height: clamp(130px, 33dvh, 220px) !important; 
-    width: 100%;
+    height: clamp(130px, 28dvh, 180px) !important; 
+    width: 90;
     flex-shrink: 0 !important;   
     background-size: cover;      
     background-position: center;  
@@ -473,8 +474,9 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   }
 
   .service-body {
+    flex: 1;
     flex-grow: 1 !important;
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
     justify-content: flex-start !important;
     text-align: center !important;     
@@ -489,7 +491,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
       font-weight: 500 !important;
       line-height: 1.05 !important;   
       margin-top: 0;
-      margin-bottom: clamp(0.15rem, 0.4dvh, 0.15rem) !important; 
+      margin-bottom: clamp(0.15rem, 0.2dvh, 0.15rem) !important; 
       color: var(--ink) !important;
   }
 
@@ -499,7 +501,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     font-size: clamp(1.5rem, 2.8dvh, 2rem) !important;
     font-style: italic !important;  
     font-weight: 300 !important;
-    line-height: 1.3 !important;
+    line-height: 1.2 !important;
     color: var(--ink-soft) !important; 
     margin: 0 !important;
     padding: 0.3rem 0.2rem !important; 
