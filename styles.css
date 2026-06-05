@@ -24,7 +24,7 @@
   --shadow-md: 0 20px 60px rgba(0,0,0,.12);
   --shadow-lg: 0 40px 100px rgba(0,0,0,.18);
 
-  --radius-sm: 12px;
+  --radius-sm: 15px;
   --radius-md: 20px;
   --radius-lg: 32px;
   --transition: all .35s cubic-bezier(0.25, 1, 0.5, 1);
@@ -52,7 +52,7 @@ body {
     var(--night) 75%
   );
   color: var(--paper);
-  line-height: 1.7;
+  line-height: 1.5;
   overflow: hidden; 
   -webkit-font-smoothing: antialiased;
 }
@@ -219,7 +219,7 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 }
 
 .hero-content { max-width: 650px; }
-.section-mark { display: inline-block; color: var(--gold-soft); letter-spacing: .15em; text-transform: uppercase; font-size: .75rem; margin-bottom: 1rem; }
+.section-mark { display: inline-block; color: var(--gold-soft); letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; margin-bottom: 0.35rem; }
 .hero-section h1 { margin: 0 0 1rem 0; font-family: "Cormorant Garamond", serif; font-size: clamp(3.5rem,7vw,6rem); line-height: .95; font-weight: 400; }
 .hero-lead { font-size: 1.15rem; color: rgba(255,255,255,.82); max-width: 620px; margin-bottom: 1.5rem; line-height: 1.5;}
 .hero-symbol { display: flex; justify-content: center; align-items: center; }
@@ -246,11 +246,11 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 
 .section-heading { 
   text-align: center; 
-  margin-bottom: clamp(1.5rem, 3dvh, 2.5rem); 
+  margin-bottom: clamp(06rem, 1.2dvh, 1rem); 
   flex-shrink: 0;
 }
-.section-heading h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 400; margin: .3rem 0 .5rem; }
-.section-heading p { max-width: 700px; margin: auto; color: rgba(255,255,255,.75); font-size: clamp(0.9rem, 1.5dvh, 1.05rem); }
+.section-heading h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 400; margin: 0.15rem 0 0; line-height: 1.05; }
+.section-heading p { max-width: 700px; margin: 0.5rem auto 0; color: rgba(255,255,255,.75); font-size: clamp(0.9rem, 1.4dvh, 1rem); }
 
 .services-grid { 
   display: grid; 
@@ -261,28 +261,53 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 }
 
 .service-card { 
-  background: var(--paper); 
-  color: var(--ink); 
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid rgba(200, 161, 90, 0.07);
   border-radius: var(--radius-md); 
+  padding: 14px 14px 18px;
+  position: relative;
   overflow: hidden; 
   transition: var(--transition); 
   box-shadow: var(--shadow-sm); 
   display: flex; 
   flex-direction: column; 
   height: auto; 
+  min-height: 0;
 }
 
-.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(200, 161, 90, 0.08);
+}
 
 /* CONTENEDOR VISUAL BASE */
 .service-visual { 
-  height: clamp(120px, 18dvh, 180px); 
+  height: clamp(140px, 22dvh, 220px); 
   width: 100%;  
   background: linear-gradient(135deg, var(--midnight), var(--deep-blue)); 
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
   flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition);
   background-size: cover;      
   background-position: center;  
   background-repeat: no-repeat; 
+}
+
+.service-card:hover .service-visual {
+  opacity: 0.93;
+}
+
+.service-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 100%, var(--midnight));
+  pointer-events: none;
 }
 
 /* =======================================================
@@ -300,37 +325,32 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
 }
 
 .service-body { 
-  padding: clamp(1rem, 2.5dvh, 1.5rem) 1.5rem; 
+  padding: 10px 6px 4px; 
   flex-grow: 1; 
   display: flex; 
   flex-direction: column; 
   justify-content: space-between; 
-  text-align: center;     
+  text-align: center; 
+  gap: clamp(0.5rem, 1.5dvh, 1rem);
 }
 
 .service-body h3 { 
-  margin: 0 0 0.5rem 0; 
+  margin: 0; 
   font-family: "Cormorant Garamond", serif; 
-  font-size: clamp(1.3rem, 2.2dvh, 1.7rem); 
-  font-weight: 500; 
-  line-height: 1.2;
-}
-
-.service-body p {
-  font-family: 'Cormorant Garamond', serif !important;
-  font-size: clamp(0.95rem, 1.6dvh, 1.1rem) !important; 
-  font-style: italic !important;  
-  line-height: 1.35 !important;   
-  color: var(--ink-soft) !important; 
-  padding: 0 0.2rem !important;   
-  margin-top: 0 !important; 
-  margin-bottom: auto !important; 
+  font-size: clamp(1.7rem, 3dvh, 2.4rem); 
+  font-weight: 400; 
+  line-height: 1.1;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
 }
 
 .service-button { 
-  margin-top: 1.2rem; 
+  margin-top: 0; 
   width: 100%; 
-  padding: clamp(0.7rem, 1.3dvh, 0.9rem); 
+  padding: clamp(0.65rem, 1.3dvh, 0.85rem); 
   border: none; 
   border-radius: 999px; 
   background: var(--midnight); 
@@ -338,7 +358,8 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   cursor: pointer; 
   transition: var(--transition); 
   flex-shrink: 0;
-  font-size: clamp(0.85rem, 1.2dvh, 0.95rem);
+  font-size: clamp(0.88rem, 1.3dvh, 1rem);
+  letter-spacing: 0.04em;
 }
 .service-button:hover { background: var(--deep-blue); }
 
@@ -390,7 +411,10 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   .hero-symbol { display: none; }
   
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .service-card { height: auto; } 
+  .service-card {
+    height: auto;
+    min-height: clamp(340px, 50dvh, 480px);
+  } 
   
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .about-image { max-width: 300px; }
@@ -401,34 +425,30 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   .slide-navigator { display: flex; } 
 
   .services-section { 
-      height: 100dvh !important; 
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: flex-start !important;
-      overflow: hidden; 
-      padding-top: calc(48px + env(safe-area-inset-top)) !important; 
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden; 
+    padding-top: calc(55px + env(safe-area-inset-top)); 
   }
 
   .section-heading { 
-    margin-bottom: clamp(0.2rem, 1dvh, 0.5rem) !important; 
-    text-align: center !important;
-    flex-shrink: 0;
-    padding-top: calc(15px + env(safe-area-inset-top)) !important; 
+    margin-bottom: clamp(0.4rem, 1dvh, 0.8rem);
+    padding-top: clamp(0.4rem, 1dvh, 0.8rem);
   }
 
-  .section-heading .section-mark { margin-bottom: 0.1rem !important; }
+  .section-heading .section-mark { margin-bottom: 0.1rem; }
   .section-heading h2 { 
-    font-family: 'Cormorant Garamond', serif !important;
-    font-size: clamp(1.5rem, 3.8dvh, 1.95rem) !important; 
-    line-height: 1.1 !important;  
-    margin: 0 !important;
-    font-weight: 500 !important;
+    font-size: clamp(1.6rem, 4dvh, 2.2rem);
+    line-height: 1.05;
+    margin: 0;
   }
-  .section-heading p { display: none !important; }
+  .section-heading p { display: none; }
   
   .services-grid {
-    display: flex !important;
-    flex-direction: row !important;
+    display: flex;
+    flex-direction: row;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 1rem;
@@ -436,94 +456,60 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     margin-left: calc(-50vw + 50%);
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
-    flex-grow: 1 !important; 
+    flex-grow: 1;
     min-height: 0; 
     align-items: stretch;    
-    padding: 0.2rem 1.5rem calc(10px + env(safe-area-inset-bottom)) !important; 
+    padding: 0.4rem 1.25rem calc(12px + env(safe-area-inset-bottom));
   }
   .services-grid::-webkit-scrollbar { display: none; }
   
   .service-card {
-    display: flex !important;
-    flex: 0 0 93%;
+    flex: 0 0 88%;
     scroll-snap-align: center;
-    height: 100% !important; 
-    display: flex !important;
-    flex-direction: column !important;
+    height: 100%;
+    flex-direction: column;
     overflow: hidden;
+    min-height: 0;
   }
   
   .service-visual { 
-    height: clamp(130px, 24dvh, 180px) !important; 
-    width: 100% !important;
-    flex-shrink: 0 !important;   
-    background-size: cover;      
-    background-position: center;  
-    background-repeat: no-repeat; 
+    height: clamp(160px, 30dvh, 240px);
+    flex-shrink: 0;
   }
 
   /* RE-INYECCIÓN DE IMÁGENES EN RESPONSIVE MÓVIL */
   .service-card:nth-child(1) .service-visual {
-    background-image: url("tarot.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
+    background-image: url("tarot.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue));
   }
   .service-card:nth-child(2) .service-visual {
-    background-image: url("constelaciones.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
+    background-image: url("constelaciones.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue));
   }
   .service-card:nth-child(3) .service-visual {
-    background-image: url("carta_astral.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue)) !important;
+    background-image: url("carta_astral.png"), linear-gradient(135deg, var(--midnight), var(--deep-blue));
   }
 
   .service-body {
     flex: 1;
-    flex-grow: 1 !important;
-    display: flex;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    text-align: center !important;     
-    gap: 0.5rem;
-    padding: clamp(0.6rem, 1.8dvh, 1.1rem) 1.25rem !important; 
+    min-height: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(0.6rem, 1.8dvh, 1rem) 1rem;
+    gap: clamp(0.4rem, 1.5dvh, 0.8rem);
   }
 
   .service-body h3 { 
-      margin: 0 0 0.6rem 0;
-      font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(2.4rem, 4.1dvh, 3.3rem) !important; 
-      font-weight: 500 !important;
-      line-height: 1.05 !important;   
-      margin-top: 0.5rem !important;
-      margin-bottom: clamp(0.15rem, 0.2dvh, 0.15rem) !important; 
-      color: var(--ink) !important;
-  }
-
-  .service-body p {
-    flex-grow: 1 !important;
-    font-family: 'Cormorant Garamond', serif !important;
-    font-size: clamp(1.5rem, 2.8dvh, 2rem) !important;
-    font-style: italic !important;  
-    font-weight: 300 !important;
-    line-height: 1.2 !important;
-    color: var(--ink-soft) !important; 
-    margin: 0 !important;
-    padding: 0.3rem 0.2rem !important; 
-    align-items: center;
-    display: flex;
-    text-align: center !important;
-    margin-bottom: 0.5rem !important;
+    font-size: clamp(1.9rem, 4.5dvh, 3rem);
+    font-weight: 400;
+    line-height: 1.05;   
+    margin: 0;
+    color: var(--ink);
   }
 
   .service-button {
-    margin-top: 0.5rem !important; 
-    width: 100%;
-    padding: clamp(0.55rem, 1.6dvh, 0.8rem) !important; 
-    border: none;
-    border-radius: 999px;
-    background: var(--midnight) !important;
-    color: var(--paper) !important;
-    cursor: pointer;
-    transition: var(--transition);
-    flex-shrink: 0 !important; 
-    margin-bottom: 0.5rem !important;
-    font-size: clamp(1.15rem, 3.1dvh, 1.35rem) !important; 
+    margin-top: 0;
+    padding: clamp(0.6rem, 1.6dvh, 0.85rem);
+    font-size: clamp(0.9rem, 2dvh, 1.1rem);
+    margin-bottom: 0.25rem;
   }
 }
 
@@ -629,11 +615,12 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
   justify-content: center !important;
 }
 
-.modal-specs {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 1rem 0 !important;
-}
+  .modal-specs {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 1rem 0 !important;
+  }
+
 
 /* DESKTOP ADJUSTMENTS */
 @media (min-width: 769px) {
@@ -643,55 +630,19 @@ button { font: inherit; background: transparent; border: none; cursor: pointer; 
     display: none;
   }
 
-  /* Cards fill available vertical space */
+  /* Cards fill available vertical space naturally */
   .services-section {
-    justify-content: flex-start !important;
-    padding-bottom: 10rem !important;
+    padding-top: var(--header-height);
+    padding-bottom: 2rem;
+    justify-content: flex-start;
   }
 
   .services-grid {
-    flex: 1 !important;
-    min-height: 0 !important;
-    grid-template-rows: 1fr !important;
-    align-items: stretch !important;
-  }
-
-  .service-visual {
-    flex: 0 0 40% !important;
-  }
-
-  .service-body {
-    flex: 1 !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
-  }
-
-  .service-body h3 {
-    font-size: clamp(1.8rem, 2.2vw, 2.4rem) !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  .service-body p {
-    flex-grow: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    font-size: clamp(1.1rem, 1.3vw, 1.4rem) !important;
-    line-height: 1.6 !important;
-    margin: 0 !important;
-  }
-
-  .service-button {
-    font-size: 1.1rem !important;
-    padding: 1rem !important;
-    margin-top: 0 !important;
-  }
-
-  .services-section {
-    padding-top: calc(var(--header-height)-1rem) !important;
+    align-items: stretch;
   }
 
   .section-heading {
-    margin-bottom: clamp(0.8rem, 1.5dvh, 1.2rem) !important;
+    margin-bottom: clamp(0.8rem, 1.5dvh, 1.4rem);
   }
 
 }
