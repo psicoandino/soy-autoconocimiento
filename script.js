@@ -123,8 +123,10 @@ function initServiceModal() {
 
     // Inyección de variables textuales bases
     title.textContent = dataSource.dataset.title || "";
-    description.textContent = dataSource.dataset.description || "";
-
+    const rawText = dataSource.dataset.description || "";
+    const paragraphs = rawText.split('\n').filter(p => p.trim() !== '');
+    description.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+    
     // Sintonización condicional de especificaciones técnicas
     if (format) {
       const formatVal = dataSource.dataset.format;
