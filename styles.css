@@ -255,9 +255,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
+  padding: 11px 22px;
   border-radius: 999px;
-  font-size: 1.2rem;
+  font-size: .8rem;
   transition: var(--transition);
   gap: 0.5rem;
 }
