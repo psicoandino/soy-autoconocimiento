@@ -255,9 +255,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 22px;
+  padding: 14px 28px;
   border-radius: 999px;
-  font-size: .8rem;
+  font-size: 1.25rem;
   transition: var(--transition);
   gap: 0.5rem;
 }
@@ -535,7 +535,10 @@ body {
   position: relative;
   max-height: 90dvh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
+
 .modal-close {
   position: absolute;
   top: 1rem;
@@ -544,10 +547,15 @@ body {
   cursor: pointer;
   color: var(--ink-soft);
 }
+
 .modal-content  {
+  align-items: center;
   text-align: center; 
+  text-justify: center;
   display: flex;
   flex-direction: column;
+  flex:1;
+  min-height: 0;
   height: 100%;
   gap:0;
 }
@@ -571,24 +579,29 @@ body {
   grid-template-columns: 0.9fr 1.1fr;
   gap: 4rem;
   align-items: center;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
 }
-.about-image   { max-width: 400px; width: 100%; justify-self: center; }
+
+.about-image   { max-width: 300px; width: 100%; justify-self: center; }
 .image-frame   { background: white; padding: 1rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
 .about-content h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.05; margin: 0.5rem 0 1.5rem; font-weight: 400; }
 .about-content p  { color: var(--ink-soft); font-size: 1rem; line-height: 1.8; margin-bottom: 1.2rem; }
-.about-content { text-align: center; }
-.signature-block { margin-top: 2.5rem; }
+.about-content { overflow-y: auto; max-height: 100%; padding: center; text-align: center; }
+.signature-block { margin-top: 0rem; }
 .signature-line  { display: block; width: 80px; height: 1px; background: var(--gold); margin: 0 auto 1rem; }
 .signature-name  { display: block; color: var(--gold-dark); font-weight: 600; font-size: 1rem; }
 .signature-title { display: block; margin-top: 0.2rem; color: var(--ink-soft); font-size: 0.9rem; font-style: italic; }
 
 .modal-specs { 
+
   list-style: none;
   margin: 0;
   padding: 1rem 0 0.5rem;
   flex-shrink: 0;
   border-top: 1px solid rgba(200, 161, 90, 0.25);
-  text-align: left;
+  text-align: center;
 }
 
 
@@ -633,7 +646,7 @@ body {
 
   /* About modal en una columna */
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .about-image { max-width: 300px; }
+  .about-image { max-width: 200px; }
 }
 
 
