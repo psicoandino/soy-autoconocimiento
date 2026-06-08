@@ -228,7 +228,7 @@ body {
 
 .hero-section h1 {
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(4rem, 8.5vw, 7.5rem);
+  font-size: clamp(4rem, 7.5vw, 7.5rem);
   line-height: 0.95;
   font-weight: 400;
   margin-bottom: 1rem;
@@ -251,7 +251,6 @@ body {
    ======================================================= */
 
 .btn {
-  margin-top: 5vw;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -262,6 +261,7 @@ body {
   gap: 0.5rem;
 }
 .hero-actions, .modal-actions { 
+  margin-top: 0rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -269,11 +269,16 @@ body {
   padding-top: 0.5rem;
 }
 
+/* y lo pones solo donde lo necesitas: */
+.hero-actions .btn {
+  margin-top: 5vw;
+}
+
 .btn-primary { background: var(--gold); color: var(--night); font-weight: 600; }
 .btn-primary:hover { transform: translateY(-2px); background: var(--gold-soft); }
 
 .btn-secondary { background: var(--ink-soft); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); }
-.btn-secondary:hover { border-color: var(--gold); color: var(--gold-soft); }
+.btn-secondary:hover { transform: translateY(-2px);border-color: var(--gold); color: var(--gold-soft); }
 
 
 /* =======================================================
